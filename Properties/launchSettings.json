@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Timebook (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "Timebook (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

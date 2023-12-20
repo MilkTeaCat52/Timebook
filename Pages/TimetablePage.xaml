@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Timebook.TimetablePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Timebook"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:lc="using:Timebook.Controls"
+    mc:Ignorable="d"
+    Background="Transparent">
+
+    <Grid Background="Green">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <lc:GroupBar Grid.Row="2"/>
+
+        <Button Grid.Row="3" 
+                VerticalAlignment="Bottom"
+                Style="{StaticResource AccentButtonStyle}"
+                HorizontalAlignment="Right"
+                Margin="0,0,16,16">
+            <TextBlock Text="Save"/>
+        </Button>
+    </Grid>
+</Page>
