@@ -1,46 +1,51 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <UserControl
     x:Class="Timebook.Controls.ColorButton"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Timebook.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:Timebook.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"   
-    x:Name="uc">
+    x:Name="uc"
+    mc:Ignorable="d">
 
-    <Button x:Name="Button"
-            MinHeight="20"
-            MinWidth="20"
-            Width="{x:Bind uc.Width}">
+    <Button
+        x:Name="Button"
+        Width="{x:Bind uc.Width}"
+        MinWidth="20"
+        MinHeight="20">
 
 
 
         <Button.Flyout>
-            <Flyout x:Name="Flyout"
-                    Opened="PickerOpened"
-                    Closed="ColorPicked"
-                    Placement="Right">
+            <Flyout
+                x:Name="Flyout"
+                Closed="ColorPicked"
+                Opened="PickerOpened"
+                Placement="Right">
 
                 <Grid>
-                    <ColorPicker x:Name="Picker"
-                                 ColorSpectrumShape="Ring"
-                                 IsMoreButtonVisible="False"
-                                 IsColorSliderVisible="True"
-                                 IsColorChannelTextInputVisible="True"
-                                 IsHexInputVisible="True"
-                                 
-                                 IsAlphaEnabled="True"
-                                 IsAlphaSliderVisible="True"
-                                 IsAlphaTextInputVisible="True"/>
+                    <ColorPicker
+                        x:Name="Picker"
+                        ColorSpectrumShape="Ring"
+                        IsAlphaEnabled="True"
+                        IsAlphaSliderVisible="True"
+                        IsAlphaTextInputVisible="True"
+                        IsColorChannelTextInputVisible="True"
+                        IsColorSliderVisible="True"
+                        IsHexInputVisible="True"
+                        IsMoreButtonVisible="False" />
 
-                    <Button HorizontalAlignment="Right"
-                            VerticalAlignment="Bottom"
-                            Margin="0,0,0,16"
-                            Click="PickCanceled">Cancel</Button>
+                    <Button
+                        Margin="0,0,0,16"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Click="PickCanceled">
+                        Cancel
+                    </Button>
 
                 </Grid>
-                
+
             </Flyout>
         </Button.Flyout>
     </Button>

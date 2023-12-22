@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Window
     x:Class="Timebook.Settings"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Timebook"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:Timebook"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
@@ -18,37 +18,45 @@
             <Thickness x:Key="NavigationViewContentMargin">0,48,0,0</Thickness>
         </Grid.Resources>
 
-        <Border x:Name="AppTitleBar"
-                IsHitTestVisible="True"
-                VerticalAlignment="Top"
-                Background="Transparent"
-                Height="48"
-                Canvas.ZIndex="1"
-                Margin="48, 0, 0, 0"/>
+        <Border
+            x:Name="AppTitleBar"
+            Height="48"
+            Margin="48,0,0,0"
+            VerticalAlignment="Top"
+            Background="Transparent"
+            Canvas.ZIndex="1"
+            IsHitTestVisible="True" />
 
-        <NavigationView x:Name="NavView"
-                        IsTitleBarAutoPaddingEnabled="True"
-                        IsBackButtonVisible="Collapsed"
-                        Canvas.ZIndex="0"
-                        PaneDisplayMode="LeftCompact"
-                        OpenPaneLength="250"
-                        Loaded="NavLoaded"
-                        SelectionChanged="NavSelectionChanged">
+        <NavigationView
+            x:Name="NavView"
+            Canvas.ZIndex="0"
+            IsBackButtonVisible="Collapsed"
+            IsTitleBarAutoPaddingEnabled="True"
+            Loaded="NavLoaded"
+            OpenPaneLength="250"
+            PaneDisplayMode="LeftCompact"
+            SelectionChanged="NavSelectionChanged">
 
             <NavigationView.MenuItems>
-                <NavigationViewItem Content="Timetable" Icon="Calendar" Tag="Timebook.TimetablePage"/>
+                <NavigationViewItem
+                    Content="Timetable"
+                    Icon="Calendar"
+                    Tag="Timebook.TimetablePage" />
 
-                <NavigationViewItem Content="Subsitution" Icon="People" Tag="Timebook.SubstitutionPage"/>
+                <NavigationViewItem
+                    Content="Subsitution"
+                    Icon="People"
+                    Tag="Timebook.SubstitutionPage" />
 
                 <NavigationViewItem Content="Customization" Tag="Timebook.CustomizationPage">
                     <NavigationViewItem.Icon>
-                        <FontIcon Glyph="&#xE790;"/>
+                        <FontIcon Glyph="&#xE790;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.MenuItems>
 
             <ScrollViewer>
-                <Frame x:Name="ContentFrame"/>
+                <Frame x:Name="ContentFrame" />
             </ScrollViewer>
         </NavigationView>
     </Grid>

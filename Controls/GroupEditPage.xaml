@@ -1,37 +1,46 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Page
     x:Class="Timebook.Controls.GroupEditPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Timebook.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:Timebook.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
     Background="Transparent"
-    
-    Loaded="PageLoaded">
+    Loaded="PageLoaded"
+    mc:Ignorable="d">
     <ScrollViewer>
-        <Grid MinHeight="220"
-              MinWidth="440">
-            <StackPanel Spacing="4"
-                        HorizontalAlignment="Center">
+        <Grid MinWidth="440" MinHeight="220">
+            <StackPanel HorizontalAlignment="Center" Spacing="4">
                 <TextBlock>Name</TextBlock>
-                <TextBox x:Name="GroupName" Width="400" HorizontalAlignment="Left"/>
+                <TextBox
+                    x:Name="GroupName"
+                    Width="400"
+                    HorizontalAlignment="Left" />
 
-                <TextBlock/>
+                <TextBlock />
 
                 <TextBlock>Color</TextBlock>
-                <local:ColorButton Width="35" HorizontalAlignment="Left" x:Name="ColorButton"/>
+                <local:ColorButton
+                    x:Name="ColorButton"
+                    Width="35"
+                    HorizontalAlignment="Left" />
 
-                <TextBlock/>
+                <TextBlock />
 
                 <TextBlock>Teacher</TextBlock>
-                <TextBox x:Name="Teacher" Width="400" HorizontalAlignment="Left"/>
+                <TextBox
+                    x:Name="Teacher"
+                    Width="400"
+                    HorizontalAlignment="Left" />
 
-                <TextBlock/>
+                <TextBlock />
 
                 <TextBlock>Room</TextBlock>
-                <TextBox x:Name="Room" Width="400" HorizontalAlignment="Left"/>
+                <TextBox
+                    x:Name="Room"
+                    Width="400"
+                    HorizontalAlignment="Left" />
 
 
             </StackPanel>

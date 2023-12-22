@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Page 
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
     x:Class="Timebook.SettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:Timebook"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolkit="using:CommunityToolkit.WinUI.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
-    xmlns:local="using:Timebook"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="Transparent">
+    Background="Transparent"
+    mc:Ignorable="d">
 
     <Page.Resources>
         <!--  These styles can be referenced to create a consistent SettingsPage layout  -->
@@ -18,9 +18,10 @@
         <x:Double x:Key="SettingsCardSpacing">4</x:Double>
 
         <!--  Style (inc. the correct spacing) of a section header  -->
-        <Style x:Key="SettingsSectionHeaderTextBlockStyle"
-               BasedOn="{StaticResource BodyStrongTextBlockStyle}"
-               TargetType="TextBlock">
+        <Style
+            x:Key="SettingsSectionHeaderTextBlockStyle"
+            BasedOn="{StaticResource BodyStrongTextBlockStyle}"
+            TargetType="TextBlock">
             <Style.Setters>
                 <Setter Property="Margin" Value="1,30,0,6" />
             </Style.Setters>
@@ -34,12 +35,18 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <TextBlock Padding="48,28,0,0" FontSize="28" FontWeight="SemiBold">Settings</TextBlock>
+        <TextBlock
+            Padding="48,28,0,0"
+            FontSize="28"
+            FontWeight="SemiBold">
+            Settings
+        </TextBlock>
 
-        <StackPanel Grid.Row="1"
-                    Margin="48,0,48,0"
-                    HorizontalAlignment="Stretch"
-                    Spacing="{StaticResource SettingsCardSpacing}">
+        <StackPanel
+            Grid.Row="1"
+            Margin="48,0,48,0"
+            HorizontalAlignment="Stretch"
+            Spacing="{StaticResource SettingsCardSpacing}">
             <StackPanel.ChildrenTransitions>
                 <TransitionCollection>
                     <EntranceThemeTransition FromVerticalOffset="50" />
@@ -47,85 +54,76 @@
                 </TransitionCollection>
             </StackPanel.ChildrenTransitions>
 
-            <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"
-                       Text="Appearance" />
+            <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="Appearance" />
 
-            <toolkit:SettingsCard Header="App Theme"
-                                  Description="Select app theme to use">
+            <toolkit:SettingsCard Description="Select app theme to use" Header="App Theme">
 
                 <toolkit:SettingsCard.HeaderIcon>
-                    <FontIcon Glyph="&#xE790;"/>
+                    <FontIcon Glyph="&#xE790;" />
                 </toolkit:SettingsCard.HeaderIcon>
 
-                <ComboBox x:Name="ThemeCombo"
-                          SelectionChanged="ThemeToggled">
+                <ComboBox x:Name="ThemeCombo" SelectionChanged="ThemeToggled">
                     <ComboBoxItem Tag="Light">Light</ComboBoxItem>
                     <ComboBoxItem Tag="Dark">Dark</ComboBoxItem>
                     <ComboBoxItem Tag="System Default">System Default</ComboBoxItem>
                 </ComboBox>
             </toolkit:SettingsCard>
 
-            <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"
-                       Text="Storage" />
+            <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="Storage" />
 
-            <toolkit:SettingsCard Header="Storage Directory"
-                                  Description="Location where files are stored"
-                                  x:Name="StorageDirCard"
-                                  ContentAlignment="Vertical">
+            <toolkit:SettingsCard
+                x:Name="StorageDirCard"
+                ContentAlignment="Vertical"
+                Description="Location where files are stored"
+                Header="Storage Directory">
 
                 <toolkit:SettingsCard.HeaderIcon>
-                    <FontIcon Glyph="&#xE74E;"/>
+                    <FontIcon Glyph="&#xE74E;" />
                 </toolkit:SettingsCard.HeaderIcon>
 
                 <StackPanel Orientation="Horizontal" Spacing="3">
 
-                    <TextBox x:Name="StorageDirBox"/>
+                    <TextBox x:Name="StorageDirBox" />
 
-                    <Button VerticalAlignment="Stretch"
-                            Click="StorageDirPick"
-                            ToolTipService.ToolTip="Browse">
+                    <Button
+                        VerticalAlignment="Stretch"
+                        Click="StorageDirPick"
+                        ToolTipService.ToolTip="Browse">
                         ⋮
                     </Button>
 
-                    <Button Click="StorageDirSave"
-                            ToolTipService.ToolTip="Select">
-                        <SymbolIcon Symbol="Accept"/>
+                    <Button Click="StorageDirSave" ToolTipService.ToolTip="Select">
+                        <SymbolIcon Symbol="Accept" />
                     </Button>
 
-                    <Button Click="StorageDirReset"
-                            ToolTipService.ToolTip="Reset">
-                        <FontIcon Glyph="&#xE777;"/>
+                    <Button Click="StorageDirReset" ToolTipService.ToolTip="Reset">
+                        <FontIcon Glyph="&#xE777;" />
                     </Button>
                 </StackPanel>
 
             </toolkit:SettingsCard>
 
-            <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"
-                       Text="About" />
+            <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="About" />
 
-            <toolkit:SettingsExpander Header="Timebook"
-                                      Description="© 2023 MilkTeaCat. All rights reserved.">
+            <toolkit:SettingsExpander Description="© 2023 MilkTeaCat. All rights reserved." Header="Timebook">
 
                 <toolkit:SettingsExpander.HeaderIcon>
-                    <BitmapIcon UriSource="Assets\Square44x44Logo.scale-200.png"
-                                ShowAsMonochrome="False"/>
+                    <BitmapIcon ShowAsMonochrome="False" UriSource="Assets\Square44x44Logo.scale-200.png" />
                 </toolkit:SettingsExpander.HeaderIcon>
 
-                <TextBlock IsTextSelectionEnabled="True"
-                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                           Text="{x:Bind version}" />
+                <TextBlock
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    IsTextSelectionEnabled="True"
+                    Text="{x:Bind version}" />
 
                 <toolkit:SettingsExpander.Items>
 
-                    <toolkit:SettingsCard Header="Report a bug"
-                                          IsClickEnabled="True">
-                        <FontIcon Glyph="&#xE8A7;"/>
+                    <toolkit:SettingsCard Header="Report a bug" IsClickEnabled="True">
+                        <FontIcon Glyph="&#xE8A7;" />
                     </toolkit:SettingsCard>
 
-                    <toolkit:SettingsCard HorizontalContentAlignment="Left"
-                                          ContentAlignment="Left">
-                        <StackPanel Margin="-12,0,0,0"
-                                    Orientation="Vertical">
+                    <toolkit:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
+                        <StackPanel Margin="-12,0,0,0" Orientation="Vertical">
                             <HyperlinkButton Content="Website" />
                             <HyperlinkButton Content="Documentation" />
                         </StackPanel>
@@ -134,7 +132,7 @@
                 </toolkit:SettingsExpander.Items>
             </toolkit:SettingsExpander>
 
-            <TextBlock Height="20"/>
+            <TextBlock Height="20" />
 
         </StackPanel>
     </Grid>
