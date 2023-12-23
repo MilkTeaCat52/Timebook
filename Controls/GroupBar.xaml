@@ -10,7 +10,6 @@
 
     <ScrollViewer
         x:Name="ScrollViewer"
-        Width="512"
         Height="48"
         HorizontalScrollBarVisibility="Auto"
         HorizontalScrollMode="Auto"
@@ -18,6 +17,7 @@
         VerticalScrollMode="Disabled">
         <StackPanel
             x:Name="StackPanel"
+            VerticalAlignment="Top"
             Background="Transparent"
             Orientation="Horizontal"
             Spacing="10" />

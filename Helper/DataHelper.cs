@@ -49,7 +49,7 @@ namespace Timebook.Helper
 
         public static Database Database = new Database();
 
-        public static GroupData CreateGroupData()
+        public static Guid CreateGroupData()
         {
             GroupData groupData = new GroupData();
             var id = GetNewID();
@@ -57,12 +57,18 @@ namespace Timebook.Helper
             Database.Groups.Add(id, groupData);
             Database.GroupOrder.Add(id);
 
-            return groupData;
+            return id;
         }
 
         public static GroupData GetGroupData(Guid key)
         {
             return Database.Groups[key];
+        }
+
+        public static void RemoveGroupData(Guid key)
+        {
+            Database.Groups.Remove(key);
+            Database.GroupOrder.Remove(key);
         }
 
         public static List<Guid> GetGroupOrder()

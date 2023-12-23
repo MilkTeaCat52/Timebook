@@ -15,6 +15,20 @@
             Click="EditStart"
             CornerRadius="16">
 
+            <Button.ContextFlyout>
+                <MenuFlyout x:Name="MenuFlyout" Opened="ContextMenuOpened">
+                    <MenuFlyoutItem
+                        Click="DeleteButtonClicked"
+                        Icon="Delete"
+                        Text="Delete">
+                        <MenuFlyoutItem.KeyboardAccelerators>
+                            <KeyboardAccelerator Key="Delete" />
+                        </MenuFlyoutItem.KeyboardAccelerators>
+                    </MenuFlyoutItem>
+                </MenuFlyout>
+            </Button.ContextFlyout>
+
+
             <Grid>
                 <SymbolIcon x:Name="Icon" Symbol="Add" />
                 <TextBlock

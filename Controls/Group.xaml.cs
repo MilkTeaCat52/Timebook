@@ -22,6 +22,8 @@ namespace Timebook.Controls
     public sealed partial class Group : UserControl
     {
         ContentDialog dialog;
+
+        Guid id;
         GroupData data;
 
         public bool IsEmpty = true;
@@ -61,11 +63,12 @@ namespace Timebook.Controls
 
             LoadContent();
         }
-        public Group(Guid groupKey)
+        public Group(Guid id)
         {
             this.InitializeComponent();
 
-            data = DataHelper.GetGroupData(groupKey);
+            this.id = id;
+            data = DataHelper.GetGroupData(id);
             IsEmpty = false;
 
             LoadContent();
@@ -73,11 +76,18 @@ namespace Timebook.Controls
 
         public void LoadContent()
         {
-            if (IsEmpty) //empty
+            if (IsEmpty)
             {
-                this.Icon.Foreground = new SolidColorBrush(Colors.White);
+                if (ThemeHelper.IsDarkTheme())
+                {
+                    this.Icon.Foreground = new SolidColorBrush(Colors.White);
+                }
+                else
+                {
+                    this.Icon.Foreground = new SolidColorBrush(Colors.Black);
+                }
             }
-            else //not empty
+            else
             {
                 this.Icon.Foreground = null;
                 this.Background = HexToBrush(this.data.Color);
@@ -161,7 +171,8 @@ namespace Timebook.Controls
         {
             if (IsEmpty)
             {
-                data = DataHelper.CreateGroupData();
+                id = DataHelper.CreateGroupData();
+                data = DataHelper.GetGroupData(id);
             }
 
             this.data.Color = BrushToHex(((GroupEditPage)dialog.Content).GetColor());
@@ -175,7 +186,25 @@ namespace Timebook.Controls
 
             ContentChanged?.Invoke(this, null);
 
-            DataHelper.Save();
+            DataHelper.Save(); //move
+        }
+
+        private void DeleteButtonClicked(object sender, RoutedEventArgs e)
+        {
+            if (!IsEmpty)
+            {
+                ((StackPanel)this.Parent).Children.Remove(this);
+                DataHelper.RemoveGroupData(id);
+                DataHelper.Save(); //move
+            }
+        }
+
+        private void ContextMenuOpened(object sender, object e)
+        {
+            if (IsEmpty)
+            {
+                MenuFlyout.Hide();
+            }
         }
     }
 }
