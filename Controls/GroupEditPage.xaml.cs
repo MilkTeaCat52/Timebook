@@ -58,6 +58,10 @@ namespace Timebook.Controls
             this.ColorButton.Background = master.Background;
 
             this.GroupName.Text = master.Text;
+
+            this.Teacher.Text = master.Teacher;
+
+            this.Room.Text = master.Room;
         }
     }
 }

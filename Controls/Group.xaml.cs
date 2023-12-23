@@ -54,6 +54,35 @@ namespace Timebook.Controls
             }
         }
 
+        public string Teacher
+        {
+            get
+            {
+                if (IsEmpty)
+                {
+                    return "";
+                }
+                else
+                {
+                    return data.Teacher;
+                }
+            }
+        }
+        public string Room
+        {
+            get
+            {
+                if (IsEmpty)
+                {
+                    return "";
+                }
+                else
+                {
+                    return data.Room;
+                }
+            }
+        }
+
         public delegate void ContentChangedHandler(object sender, EventArgs e);
         public event ContentChangedHandler ContentChanged;
 
@@ -92,7 +121,7 @@ namespace Timebook.Controls
                 this.Icon.Foreground = null;
                 this.Background = HexToBrush(this.data.Color);
                 this.Text = this.data.Name;
-            }     
+            }
         }
 
         public void ChangeHoverColor(Color originalColor)
