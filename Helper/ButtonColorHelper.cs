@@ -1,10 +1,4 @@
-﻿using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.UI.Xaml.Media;
 using Windows.UI;
 
 namespace Timebook.Helper
@@ -24,7 +18,7 @@ namespace Timebook.Helper
             {
                 if (bright) //prevent overflow from adding to color
                 {
-                    A = (byte)(originalColor.A + 255 * 0.1);
+                    A = (byte)((originalColor.A + 10) * 1.3);
                     R = originalColor.R;
                     G = originalColor.G;
                     B = originalColor.B;
@@ -32,18 +26,18 @@ namespace Timebook.Helper
                 else
                 {
                     A = (byte)255;
-                    R = (byte)(originalColor.R + 255 * 0.1);
-                    G = (byte)(originalColor.G + 255 * 0.1);
-                    B = (byte)(originalColor.B + 255 * 0.1);
+                    R = (byte)((originalColor.R + 10) * 1.3);
+                    G = (byte)((originalColor.G + 10) * 1.3);
+                    B = (byte)((originalColor.B + 10) * 1.3);
                 }
                 //overflows
             }
             else //bright
             {
-                A = (byte)(originalColor.A - 255 * 0.2);
-                R = originalColor.R;
-                G = originalColor.G;
-                B = originalColor.B;
+                A = (byte)(originalColor.A);
+                R = (byte)(originalColor.R * 0.7);
+                G = (byte)(originalColor.G * 0.7);
+                B = (byte)(originalColor.B * 0.7);
             }
 
             return new SolidColorBrush(Color.FromArgb(A, R, G, B));
@@ -54,10 +48,10 @@ namespace Timebook.Helper
             byte A, R, G, B;
 
 
-            A = (byte)(originalColor.A * 100 / 255);
-            R = originalColor.R;
-            G = originalColor.G;
-            B = originalColor.B;
+            A = (byte)(originalColor.A);
+            R = (byte)(originalColor.R * 0.4);
+            G = (byte)(originalColor.G * 0.4);
+            B = (byte)(originalColor.B * 0.4);
 
             return new SolidColorBrush(Color.FromArgb(A, R, G, B));
         }
