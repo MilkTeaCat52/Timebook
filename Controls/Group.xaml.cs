@@ -30,15 +30,19 @@ namespace Timebook.Controls
 
         new public Brush Background
         {
-            set
-            {
-                this.Button.Background = value;
-                ChangeHoverColor(((SolidColorBrush)value).Color);
-            }
-
             get
             {
                 return this.Button.Background;
+            }
+
+            set
+            {
+                this.Button.Background = value;
+
+                var color = ((SolidColorBrush)value).Color;
+
+                Button.Resources["ButtonBackgroundPointerOver"] = ButtonColorHelper.GetHoverBrush(color);
+                Button.Resources["ButtonBackgroundPressed"] = ButtonColorHelper.GetPressedBrush(color);
             }
         }
         public string Text
@@ -115,6 +119,7 @@ namespace Timebook.Controls
                 {
                     this.Icon.Foreground = new SolidColorBrush(Colors.Black);
                 }
+                this.Background = this.Background; //sets background for "+" button
             }
             else
             {
@@ -122,34 +127,6 @@ namespace Timebook.Controls
                 this.Background = HexToBrush(this.data.Color);
                 this.Text = this.data.Name;
             }
-        }
-
-        public void ChangeHoverColor(Color originalColor)
-        {
-            bool bright = (originalColor.R > 128 || originalColor.G > 128 || originalColor.B > 128);
-
-            byte A, R, G, B;
-
-            if (!bright)
-            {
-                A = (byte)255;
-                R = (byte)(originalColor.R + (255) * 0.05);
-                G = (byte)(originalColor.G + (255) * 0.05);
-                B = (byte)(originalColor.B + (255) * 0.05);
-            }
-            else
-            {
-                A = (byte)180;
-                R = originalColor.R;
-                G = originalColor.G;
-                B = originalColor.B;
-            }
-
-            Color modifiedColor = Color.FromArgb(A, R, G, B);
-
-            SolidColorBrush newBrush = new SolidColorBrush(modifiedColor);
-
-            Button.Resources["ButtonBackgroundPointerOver"] = newBrush;
         }
 
         public long BrushToHex(Brush brush)
