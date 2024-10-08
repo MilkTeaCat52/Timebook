@@ -12,6 +12,19 @@ namespace Timebook.Helper
 {
     public static class WindowHelper
     {
+        static public void InitializeWindow(Window window, int width, int height, UIElement titleBar)
+        {
+            TrackWindow(window);
+
+            var scale = DPIHelper.GetScaleForWindow(window);
+            window.AppWindow.Resize(new((int)(width * scale), (int)(height * scale)));
+
+            ThemeHelper.ApplyTheme(window);
+
+            window.ExtendsContentIntoTitleBar = true;   // enable custom titlebar
+            window.SetTitleBar(titleBar);               // set user ui element as titlebar
+        }
+
         static public void TrackWindow(Window window)
         {
             window.Closed += (sender, args) => {
@@ -33,22 +46,6 @@ namespace Timebook.Helper
                 }
             }
             return null;
-        }
-
-        // get dpi for an element
-        static public double GetRasterizationScaleForElement(UIElement element)
-        {
-            if (element.XamlRoot != null)
-            {
-                foreach (Window window in _activeWindows)
-                {
-                    if (element.XamlRoot == window.Content.XamlRoot)
-                    {
-                        return element.XamlRoot.RasterizationScale;
-                    }
-                }
-            }
-            return 0.0;
         }
 
         static public List<Window> ActiveWindows { get { return _activeWindows; } }

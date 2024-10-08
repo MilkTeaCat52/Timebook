@@ -18,35 +18,13 @@ namespace Timebook
     {
         Settings settings = null;
 
-        double scale;
-
         int width = 960;
         int height = 600;
 
-
-        [DllImport("User32.dll")]
-        public static extern uint GetDpiForWindow(IntPtr hWnd);
-        private double GetScale()
-        {
-            var handle = WinRT.Interop.WindowNative.GetWindowHandle(this);
-            uint dpi = GetDpiForWindow(handle);
-
-            return (double)dpi / 96;
-        }
-
         public MainWindow()
         {
-            WindowHelper.TrackWindow(this);
-
-            scale = GetScale();
-
-            this.AppWindow.Resize(new((int)(width * this.scale), (int)(height * this.scale)));
-            this.InitializeComponent();
-
-            ThemeHelper.ApplyTheme(this);
-
-            ExtendsContentIntoTitleBar = true;   // enable custom titlebar
-            SetTitleBar(AppTitleBar);           // set user ui element as titlebar
+            InitializeComponent();
+            WindowHelper.InitializeWindow(this, width, height, AppTitleBar);
 
             this.Closed += OnMainWindowClosed;
         }
@@ -61,8 +39,6 @@ namespace Timebook
                 settings = new Settings(x_mid, y_mid);
 
                 settings.Closed += OnSettingsClosed;
-
-                settings.InitializeComponent();
             }
             settings.Activate();
         }

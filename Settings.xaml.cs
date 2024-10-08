@@ -17,36 +17,18 @@ namespace Timebook
     /// </summary>
     public sealed partial class Settings : Window
     {
-        double scale;
-
         int width = 800;
         int height = 500;
 
-        [DllImport("User32.dll")]
-        public static extern uint GetDpiForWindow(IntPtr hWnd);
-        private double GetScale()
-        {
-            var handle = WinRT.Interop.WindowNative.GetWindowHandle(this);
-            uint dpi = GetDpiForWindow(handle);
-
-            return (double)dpi / 96;
-        }
-
         public Settings(int x_mid, int y_mid)
         {
-            WindowHelper.TrackWindow(this);
+            InitializeComponent();
+            WindowHelper.InitializeWindow(this, width, height, AppTitleBar);
 
-            scale = GetScale();
+            var w = this.AppWindow.Size.Width;
+            var h = this.AppWindow.Size.Height;
 
-            var w = width * scale;
-            var h = height * scale;
-            AppWindow.MoveAndResize(new(x_mid - (int)(w / 2), y_mid - (int)(h / 2), (int)w, (int)h));
-            this.InitializeComponent();
-
-            ThemeHelper.ApplyTheme(this);
-
-            ExtendsContentIntoTitleBar = true;   // enable custom titlebar
-            SetTitleBar(AppTitleBar);           // set user ui element as titlebar
+            AppWindow.Move(new(x_mid - (int)(w / 2), y_mid - (int)(h / 2)));
         }
 
         private void NavLoaded(object sender, RoutedEventArgs e)

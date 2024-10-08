@@ -19,9 +19,10 @@ namespace Timebook.Helper
         {
             RootTheme = SettingHelper.ThemeGet();
 
+            //Automate theme switching when theme change detected
             dispatcherQueue = DispatcherQueue.GetForCurrentThread();
             UISettings = new UISettings();
-            UISettings.ColorValuesChanged += OnThemeChanged;
+            UISettings.ColorValuesChanged += OnSystemThemeChanged;
         }
 
         public static ElementTheme RootTheme
@@ -40,25 +41,7 @@ namespace Timebook.Helper
             }
         }
 
-        public static void ApplyTheme(Window window)
-        {
-            if (window.Content is FrameworkElement rootElement)
-            {
-                rootElement.RequestedTheme = RootTheme;
-            }
-            ApplyCaptionButtonColors(window); 
-        }
-
-        public static bool IsDarkTheme()
-        {
-            if (RootTheme == ElementTheme.Default)
-            {
-                return Application.Current.RequestedTheme == ApplicationTheme.Dark;
-            }
-            return RootTheme == ElementTheme.Dark;
-        }
-
-        public static void ApplyCaptionButtonColors(Window window)
+        private static void ApplyCaptionButtonColors(Window window)
         {
             if (IsDarkTheme())
             {
@@ -86,14 +69,35 @@ namespace Timebook.Helper
             }
         }
 
-        public static void OnThemeChanged(UISettings sender, object args)
+        public static void ApplyTheme(Window window)
+        {
+            if (window.Content is FrameworkElement rootElement)
+            {
+                rootElement.RequestedTheme = RootTheme;
+            }
+            ApplyCaptionButtonColors(window);
+        }
+
+        public static bool IsDarkTheme()
+        {
+            if (RootTheme == ElementTheme.Default)
+            {
+                return Application.Current.RequestedTheme == ApplicationTheme.Dark;
+            }
+            return RootTheme == ElementTheme.Dark;
+        }
+
+        public static void OnSystemThemeChanged(UISettings sender, object args)
         {
             dispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.High,
             () =>
             {
-                foreach (Window window in WindowHelper.ActiveWindows)
+                if (_rootTheme == ElementTheme.Default)
                 {
-                    ApplyCaptionButtonColors(window);
+                    foreach (Window window in WindowHelper.ActiveWindows)
+                    {
+                        ApplyCaptionButtonColors(window);
+                    }
                 }
             });
         }
