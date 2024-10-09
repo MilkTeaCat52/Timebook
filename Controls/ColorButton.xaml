@@ -40,8 +40,8 @@
                         Margin="0,0,0,16"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
-                        Click="PickCanceled">
-                        Cancel
+                        Click="PickSaved">
+                        Save
                     </Button>
 
                 </Grid>

@@ -21,9 +21,9 @@
     <None Remove="Controls\Cell.xaml" />
     <None Remove="Controls\CellEditPage.xaml" />
     <None Remove="Controls\ColorButton.xaml" />
-    <None Remove="Controls\Group.xaml" />
-    <None Remove="Controls\GroupBar.xaml" />
-    <None Remove="Controls\GroupEditPage.xaml" />
+    <None Remove="Controls\Pill.xaml" />
+    <None Remove="Controls\PillBar.xaml" />
+    <None Remove="Controls\PillEditPage.xaml" />
     <None Remove="CustomizationPage.xaml" />
     <None Remove="Settings.xaml" />
     <None Remove="SettingsPage.xaml" />
@@ -83,7 +83,7 @@
     <Folder Include="Pages\" />
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Controls\GroupBar.xaml">
+    <Page Update="Controls\PillBar.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
@@ -93,12 +93,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Controls\GroupEditPage.xaml">
+    <Page Update="Controls\PillEditPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Controls\Group.xaml">
+    <Page Update="Controls\Pill.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

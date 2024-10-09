@@ -3,9 +3,34 @@ using Windows.UI;
 
 namespace Timebook.Helper
 {
-    static class ButtonColorHelper
+    static class ColorHelper
     {
-        public static Brush GetHoverBrush(Color originalColor)
+        public static long BrushToHex(Brush brush)
+        {
+            Color c = ((SolidColorBrush)brush).Color;
+
+            //0xAARRGGBB
+            long hex =
+            ((long)c.A) * 0x1000000 +
+            ((long)c.R) * 0x10000 +
+            ((long)c.G) * 0x100 +
+            ((long)c.B) * 0x1;
+
+            return hex;
+        }
+        public static SolidColorBrush HexToBrush(long hex)
+        {
+
+            int b = (int)(hex % 0x100);
+            int g = (int)(((hex - b) / 0x100) % 0x100);
+            int r = (int)(((hex - b - g) / 0x10000) % 0x100);
+            int a = (int)(((hex - b - g - r) / 0x1000000) % 0x100);
+
+            SolidColorBrush brush = new SolidColorBrush(Color.FromArgb((byte)a, (byte)r, (byte)g, (byte)b));
+
+            return brush;
+        }
+        public static Brush GetButtonHoverBrush(Color originalColor)
         {
             double alphaPercentage = (double)originalColor.A / 255;
 
@@ -43,7 +68,7 @@ namespace Timebook.Helper
             return new SolidColorBrush(Color.FromArgb(A, R, G, B));
         }
 
-        public static Brush GetPressedBrush(Color originalColor)
+        public static Brush GetButtonPressedBrush(Color originalColor)
         {
             byte A, R, G, B;
 

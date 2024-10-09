@@ -19,33 +19,33 @@ using Windows.Foundation.Collections;
 
 namespace Timebook.Controls
 {
-    public sealed partial class GroupBar : UserControl
+    public sealed partial class ClassBar : UserControl
     {
-        public GroupBar()
+        public ClassBar()
         {
             this.InitializeComponent();
 
-            foreach(Guid key in DataHelper.GetGroupOrder())
+            foreach(Guid key in DataHelper.GetClassOrder())
             {
-                Group group = new Group(key);
-                StackPanel.Children.Add(group);
+                ClassButton classButton = new ClassButton(key);
+                StackPanel.Children.Add(classButton);
             }
-            CreateNewGroup();
+            CreateNewClass();
         }
 
-        void CreateNewGroup()
+        void CreateNewClass()
         {
-            Group newGroup = new Group();
-            StackPanel.Children.Add(newGroup);
+            ClassButton newClassButton = new ClassButton();
+            StackPanel.Children.Add(newClassButton);
 
-            newGroup.ContentChanged += OnContentChanged;
+            newClassButton.ContentChanged += OnContentChanged;
         }
 
         void OnContentChanged(object sender, EventArgs e)
         {
-            ((Group)sender).ContentChanged -= OnContentChanged;
+            ((ClassButton)sender).ContentChanged -= OnContentChanged;
 
-            CreateNewGroup();
+            CreateNewClass();
         }
     }
 }

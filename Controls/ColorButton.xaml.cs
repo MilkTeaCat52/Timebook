@@ -27,8 +27,8 @@ namespace Timebook.Controls
 
                 var color = ((SolidColorBrush)value).Color;
 
-                Button.Resources["ButtonBackgroundPointerOver"] = ButtonColorHelper.GetHoverBrush(color);
-                Button.Resources["ButtonBackgroundPressed"] = ButtonColorHelper.GetPressedBrush(color);
+                Button.Resources["ButtonBackgroundPointerOver"] = Helper.ColorHelper.GetButtonHoverBrush(color);
+                Button.Resources["ButtonBackgroundPressed"] = Helper.ColorHelper.GetButtonPressedBrush(color);
 
                 this.Picker.Color = IsEmpty ? Colors.White : color;
             }
@@ -41,7 +41,7 @@ namespace Timebook.Controls
 
         public void PickerOpened(object sender, object e)
         {
-            canceled = false;
+            canceled = true;
         }
 
         public void ColorPicked(object sender, object e)
@@ -53,9 +53,9 @@ namespace Timebook.Controls
             }
         }
 
-        public void PickCanceled(object sender, object e)
+        public void PickSaved(object sender, object e)
         {
-            canceled = true;
+            canceled = false;
             this.Flyout.Hide();
         }
     }

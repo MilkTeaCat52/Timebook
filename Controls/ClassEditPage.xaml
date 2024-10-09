@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Page
-    x:Class="Timebook.Controls.GroupEditPage"
+    x:Class="Timebook.Controls.ClassEditPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -14,7 +14,7 @@
             <StackPanel HorizontalAlignment="Center" Spacing="4">
                 <TextBlock>Name</TextBlock>
                 <TextBox
-                    x:Name="GroupName"
+                    x:Name="ClassNameField"
                     Width="400"
                     HorizontalAlignment="Left" />
 
@@ -30,7 +30,7 @@
 
                 <TextBlock>Teacher</TextBlock>
                 <TextBox
-                    x:Name="Teacher"
+                    x:Name="TeacherField"
                     Width="400"
                     HorizontalAlignment="Left" />
 
@@ -38,7 +38,7 @@
 
                 <TextBlock>Room</TextBlock>
                 <TextBox
-                    x:Name="Room"
+                    x:Name="RoomField"
                     Width="400"
                     HorizontalAlignment="Left" />
 

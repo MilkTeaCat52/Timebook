@@ -12,28 +12,28 @@ namespace Timebook.Helper
         public Version VersionNumber { get; set; }
         public DateTime TimeStamp { get; set; }
 
-        public Dictionary<Guid, GroupData> Groups { get; set; }
-        public List<Guid> GroupOrder { get; set; }
+        public Dictionary<Guid, ClassData> Classes { get; set; }
+        public List<Guid> ClassOrder { get; set; }
 
 
         public Database()
         {
             VersionNumber = App.Version;
             TimeStamp = DateTime.Now;
-            Groups = new Dictionary<Guid, GroupData>();
-            GroupOrder = new List<Guid>();
+            Classes = new Dictionary<Guid, ClassData>();
+            ClassOrder = new List<Guid>();
         }
 
         [JsonConstructor]
         public Database(Version versionNumber,
                         DateTime timeStamp,
-                        Dictionary<Guid, GroupData> groups,
-                        List<Guid> groupOrder)
+                        Dictionary<Guid, ClassData> classes,
+                        List<Guid> classOrder)
         {
             VersionNumber = versionNumber;
             TimeStamp = timeStamp;
-            Groups = groups;
-            GroupOrder = groupOrder;
+            Classes = classes;
+            ClassOrder = classOrder;
         }
     }
 
@@ -49,31 +49,36 @@ namespace Timebook.Helper
 
         public static Database Database = new Database();
 
-        public static Guid CreateGroupData()
+        public static Guid CreateClassData()
         {
-            GroupData groupData = new GroupData();
+            ClassData classData = new ClassData();
             var id = GetNewID();
 
-            Database.Groups.Add(id, groupData);
-            Database.GroupOrder.Add(id);
+            Database.Classes.Add(id, classData);
+            Database.ClassOrder.Add(id);
 
             return id;
         }
 
-        public static GroupData GetGroupData(Guid key)
+        public static ClassData GetClassData(Guid key)
         {
-            return Database.Groups[key];
+            return Database.Classes[key];
         }
 
-        public static void RemoveGroupData(Guid key)
+        public static void SetClassData(Guid key, ClassData classData)
         {
-            Database.Groups.Remove(key);
-            Database.GroupOrder.Remove(key);
+            Database.Classes[key] = classData;
         }
 
-        public static List<Guid> GetGroupOrder()
+        public static void RemoveClassData(Guid key)
         {
-            return Database.GroupOrder;
+            Database.Classes.Remove(key);
+            Database.ClassOrder.Remove(key);
+        }
+
+        public static List<Guid> GetClassOrder()
+        {
+            return Database.ClassOrder;
         }
 
         static public Guid GetNewID()

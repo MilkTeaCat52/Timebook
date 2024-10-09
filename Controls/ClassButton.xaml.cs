@@ -4,27 +4,35 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using System;
 using Timebook.Helper;
-using Windows.UI;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace Timebook.Controls
 {
-    public class GroupData
+    public class ClassData
     {
         public long Color { get; set; } = -0x1;
         public string Name { get; set; } = "";
         public string Teacher { get; set; } = "";
         public string Room { get; set; } = "";
+
+        public ClassData() { }
+
+        public ClassData(ClassData data)
+        {
+            this.Color = data.Color;
+            this.Name = data.Name;
+            this.Teacher = data.Teacher;
+            this.Room = data.Room;
+        }
     }
 
-    public sealed partial class Group : UserControl
+    public sealed partial class ClassButton : UserControl
     {
         ContentDialog dialog;
 
         Guid id;
-        GroupData data;
 
         public bool IsEmpty = true;
 
@@ -41,8 +49,8 @@ namespace Timebook.Controls
 
                 var color = ((SolidColorBrush)value).Color;
 
-                Button.Resources["ButtonBackgroundPointerOver"] = ButtonColorHelper.GetHoverBrush(color);
-                Button.Resources["ButtonBackgroundPressed"] = ButtonColorHelper.GetPressedBrush(color);
+                Button.Resources["ButtonBackgroundPointerOver"] = Helper.ColorHelper.GetButtonHoverBrush(color);
+                Button.Resources["ButtonBackgroundPressed"] = Helper.ColorHelper.GetButtonPressedBrush(color);
             }
         }
         public string Text
@@ -51,57 +59,22 @@ namespace Timebook.Controls
             {
                 this.TextBlock.Text = value;
             }
-
-            get
-            {
-                return this.TextBlock.Text;
-            }
-        }
-
-        public string Teacher
-        {
-            get
-            {
-                if (IsEmpty)
-                {
-                    return "";
-                }
-                else
-                {
-                    return data.Teacher;
-                }
-            }
-        }
-        public string Room
-        {
-            get
-            {
-                if (IsEmpty)
-                {
-                    return "";
-                }
-                else
-                {
-                    return data.Room;
-                }
-            }
         }
 
         public delegate void ContentChangedHandler(object sender, EventArgs e);
         public event ContentChangedHandler ContentChanged;
 
-        public Group()
+        public ClassButton()
         {
             this.InitializeComponent();
 
             LoadContent();
         }
-        public Group(Guid id)
+        public ClassButton(Guid id)
         {
             this.InitializeComponent();
 
             this.id = id;
-            data = DataHelper.GetGroupData(id);
             IsEmpty = false;
 
             LoadContent();
@@ -124,37 +97,13 @@ namespace Timebook.Controls
             else
             {
                 this.Icon.Foreground = null;
-                this.Background = HexToBrush(this.data.Color);
-                this.Text = this.data.Name;
+
+                var dataTemp = DataHelper.GetClassData(id);
+
+                this.Background = Timebook.Helper.ColorHelper.HexToBrush(dataTemp.Color);
+                this.Text = dataTemp.Name;
             }
         }
-
-        public long BrushToHex(Brush brush)
-        {
-            Color c = ((SolidColorBrush)brush).Color;
-
-            //0xAARRGGBB
-            long hex =
-            ((long)c.A) * 0x1000000 +
-            ((long)c.R) * 0x10000 +
-            ((long)c.G) * 0x100 +
-            ((long)c.B) * 0x1;
-
-            return hex;
-        }
-        public SolidColorBrush HexToBrush(long hex)
-        {
-
-            int b = (int)(hex % 0x100);
-            int g = (int)(((hex - b) / 0x100) % 0x100);
-            int r = (int)(((hex - b - g) / 0x10000) % 0x100);
-            int a = (int)(((hex - b - g - r) / 0x1000000) % 0x100);
-
-            SolidColorBrush brush = new SolidColorBrush(Color.FromArgb((byte)a, (byte)r, (byte)g, (byte)b));
-
-            return brush;
-        }
-
 
         async public void EditStart(object sender, RoutedEventArgs e)
         {
@@ -163,11 +112,19 @@ namespace Timebook.Controls
             // XamlRoot must be set in the case of a ContentDialog running in a Desktop app
             dialog.XamlRoot = this.XamlRoot;
             dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-            dialog.Title = "Edit Group";
+            dialog.Title = "Edit Class";
             dialog.PrimaryButtonText = "Save";
             dialog.CloseButtonText = "Cancel";
             dialog.DefaultButton = ContentDialogButton.Primary;
-            dialog.Content = new GroupEditPage(this);
+
+            if (IsEmpty)
+            {
+                dialog.Content = new ClassEditPage(this, new ClassData());
+            }
+            else
+            {
+                dialog.Content = new ClassEditPage(this, DataHelper.GetClassData(id));
+            }
 
             dialog.PrimaryButtonClick += EditSave;
 
@@ -177,14 +134,11 @@ namespace Timebook.Controls
         {
             if (IsEmpty)
             {
-                id = DataHelper.CreateGroupData();
-                data = DataHelper.GetGroupData(id);
+                id = DataHelper.CreateClassData();
             }
 
-            this.data.Color = BrushToHex(((GroupEditPage)dialog.Content).GetColor());
-            this.data.Name = ((GroupEditPage)dialog.Content).GetName();
-            this.data.Teacher = ((GroupEditPage)dialog.Content).GetTeacher();
-            this.data.Room = ((GroupEditPage)dialog.Content).GetRoom();
+            DataHelper.SetClassData(id, ((ClassEditPage)dialog.Content).GetData());
+
 
             IsEmpty = false;
 
@@ -192,7 +146,7 @@ namespace Timebook.Controls
 
             ContentChanged?.Invoke(this, null);
 
-            DataHelper.Save(); //move
+            DataHelper.Save(); //move to manual save when implemented
         }
 
         private void DeleteButtonClicked(object sender, RoutedEventArgs e)
@@ -200,8 +154,8 @@ namespace Timebook.Controls
             if (!IsEmpty)
             {
                 ((StackPanel)this.Parent).Children.Remove(this);
-                DataHelper.RemoveGroupData(id);
-                DataHelper.Save(); //move
+                DataHelper.RemoveClassData(id);
+                DataHelper.Save(); //move to manual save when implemented
             }
         }
 
