@@ -117,6 +117,8 @@ namespace Timebook.Controls
             dialog.CloseButtonText = "Cancel";
             dialog.DefaultButton = ContentDialogButton.Primary;
 
+            ThemeHelper.SubscribeToThemeChange(dialog);
+
             if (IsEmpty)
             {
                 dialog.Content = new ClassEditPage(this, new ClassData());

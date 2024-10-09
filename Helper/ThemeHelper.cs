@@ -1,7 +1,9 @@
 ﻿using Microsoft.UI;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
+using System;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 
@@ -15,6 +17,9 @@ namespace Timebook.Helper
 
         static ElementTheme _rootTheme;
 
+        public delegate void ThemeChangedHandler(object sender, EventArgs e);
+        public static event ThemeChangedHandler ThemeChanged;
+
         static ThemeHelper()
         {
             RootTheme = SettingHelper.ThemeGet();
@@ -23,6 +28,15 @@ namespace Timebook.Helper
             dispatcherQueue = DispatcherQueue.GetForCurrentThread();
             UISettings = new UISettings();
             UISettings.ColorValuesChanged += OnSystemThemeChanged;
+        }
+
+        public static void OnSystemThemeChanged(UISettings sender, object args)
+        {
+            dispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.High,
+            () =>
+            {
+                ThemeChanged?.Invoke(null, null);
+            });
         }
 
         public static ElementTheme RootTheme
@@ -34,11 +48,48 @@ namespace Timebook.Helper
             set
             {
                 _rootTheme = value;
-                foreach (Window window in WindowHelper.ActiveWindows)
-                {
-                    ApplyTheme(window);
-                }
+                ThemeChanged?.Invoke(null, null);
             }
+        }
+
+        public static void SubscribeToThemeChange(ContentControl control)
+        {
+            void ApplyThemeToControl(object sender=null, EventArgs e=null)
+            {
+                control.RequestedTheme = RootTheme;
+            }
+
+            ApplyThemeToControl();
+
+            ThemeChanged += ApplyThemeToControl;
+
+            control.Unloaded += (object sender, RoutedEventArgs e) =>
+            {
+                ThemeChanged -= ApplyThemeToControl;
+            };
+
+        }
+
+        public static void SubscribeToThemeChange(Window window)
+        {
+            void ApplyThemeToWindow(object sender=null, EventArgs e=null)
+            {
+                if (window.Content is FrameworkElement rootElement)
+                {
+                    rootElement.RequestedTheme = RootTheme;
+                }
+                ApplyCaptionButtonColors(window);
+            }
+
+            ApplyThemeToWindow();
+
+            ThemeChanged += ApplyThemeToWindow;
+
+            window.Closed += (object sender, WindowEventArgs e) =>
+            {
+                ThemeChanged -= ApplyThemeToWindow;
+            };
+
         }
 
         private static void ApplyCaptionButtonColors(Window window)
@@ -69,15 +120,6 @@ namespace Timebook.Helper
             }
         }
 
-        public static void ApplyTheme(Window window)
-        {
-            if (window.Content is FrameworkElement rootElement)
-            {
-                rootElement.RequestedTheme = RootTheme;
-            }
-            ApplyCaptionButtonColors(window);
-        }
-
         public static bool IsDarkTheme()
         {
             if (RootTheme == ElementTheme.Default)
@@ -86,21 +128,5 @@ namespace Timebook.Helper
             }
             return RootTheme == ElementTheme.Dark;
         }
-
-        public static void OnSystemThemeChanged(UISettings sender, object args)
-        {
-            dispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.High,
-            () =>
-            {
-                if (_rootTheme == ElementTheme.Default)
-                {
-                    foreach (Window window in WindowHelper.ActiveWindows)
-                    {
-                        ApplyCaptionButtonColors(window);
-                    }
-                }
-            });
-        }
-
     }
 }

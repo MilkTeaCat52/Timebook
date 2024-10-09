@@ -19,7 +19,7 @@ namespace Timebook.Helper
             var scale = DPIHelper.GetScaleForWindow(window);
             window.AppWindow.Resize(new((int)(width * scale), (int)(height * scale)));
 
-            ThemeHelper.ApplyTheme(window);
+            ThemeHelper.SubscribeToThemeChange(window);
 
             window.ExtendsContentIntoTitleBar = true;   // enable custom titlebar
             window.SetTitleBar(titleBar);               // set user ui element as titlebar
