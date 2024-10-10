@@ -69,6 +69,7 @@ namespace Timebook.Controls
             this.InitializeComponent();
 
             LoadContent();
+            this.ActualThemeChanged += LoadContent;
         }
         public ClassButton(Guid id)
         {
@@ -78,9 +79,10 @@ namespace Timebook.Controls
             IsEmpty = false;
 
             LoadContent();
+            this.ActualThemeChanged += LoadContent;
         }
 
-        public void LoadContent()
+        public void LoadContent(FrameworkElement sender=null, object e=null)
         {
             if (IsEmpty)
             {
