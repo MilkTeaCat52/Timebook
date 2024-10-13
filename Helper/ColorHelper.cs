@@ -30,18 +30,37 @@ namespace Timebook.Helper
 
             return brush;
         }
+
+        public static byte GetBrightness(byte R, byte G, byte B)
+        {
+            return ((byte)(0.2126 * R + 0.7152 * G + 0.0722 * B));
+        }
+
         public static Brush GetButtonHoverBrush(Color originalColor)
         {
             double alphaPercentage = (double)originalColor.A / 255;
 
-            bool bright = (originalColor.R > 128 || originalColor.G > 128 || originalColor.B > 128);
-            bool alphaBright = (originalColor.R * alphaPercentage > 128 || originalColor.G * alphaPercentage > 128 || originalColor.B * alphaPercentage > 128);
+            double backgroundHex = ThemeHelper.IsDarkTheme() ? 0x20 : 0xf9;
+
+            byte mixedR = (byte)(originalColor.R * alphaPercentage + backgroundHex * (1 - alphaPercentage));
+            byte mixedG = (byte)(originalColor.G * alphaPercentage + backgroundHex * (1 - alphaPercentage));
+            byte mixedB = (byte)(originalColor.B * alphaPercentage + backgroundHex * (1 - alphaPercentage));
+
+
+            bool mixedBright = (mixedR > 128 || mixedG > 128 || mixedB > 128);
 
             byte A, R, G, B;
 
-            if (!alphaBright) //not bright
+            if (mixedBright) //bright
             {
-                if (bright) //prevent overflow from adding to color
+                A = 255;
+                R = (byte)(mixedR * 0.8);
+                G = (byte)(mixedG * 0.8);
+                B = (byte)(mixedB * 0.8);
+            }
+            else //dark
+            {
+                if (originalColor.A < 128) //handle transparency differently since the default button color is 0x0FFFFFFF
                 {
                     A = (byte)((originalColor.A + 10) * 1.3);
                     R = originalColor.R;
@@ -51,18 +70,10 @@ namespace Timebook.Helper
                 else
                 {
                     A = (byte)255;
-                    R = (byte)((originalColor.R + 10) * 1.3);
-                    G = (byte)((originalColor.G + 10) * 1.3);
-                    B = (byte)((originalColor.B + 10) * 1.3);
+                    R = (byte)(255 - (255 - originalColor.R) * 0.88);
+                    G = (byte)(255 - (255 - originalColor.G) * 0.88);
+                    B = (byte)(255 - (255 - originalColor.B) * 0.88);
                 }
-                //overflows
-            }
-            else //bright
-            {
-                A = (byte)(originalColor.A);
-                R = (byte)(originalColor.R * 0.7);
-                G = (byte)(originalColor.G * 0.7);
-                B = (byte)(originalColor.B * 0.7);
             }
 
             return new SolidColorBrush(Color.FromArgb(A, R, G, B));
