@@ -153,11 +153,15 @@ namespace Timebook.Controls
             DataHelper.Save(); //move to manual save when implemented
         }
 
+        public delegate void DeletedHandler(ClassButton sender, EventArgs e);
+        public event DeletedHandler Deleted;
+
         private void DeleteButtonClicked(object sender, RoutedEventArgs e)
         {
             if (!IsEmpty)
             {
-                ((StackPanel)this.Parent).Children.Remove(this);
+                Deleted?.Invoke(this, null);
+
                 DataHelper.RemoveClassData(id);
                 DataHelper.Save(); //move to manual save when implemented
             }

@@ -8,19 +8,33 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <ScrollViewer
-        x:Name="ScrollViewer"
-        Height="48"
-        HorizontalScrollBarVisibility="Auto"
-        HorizontalScrollMode="Auto"
-        VerticalScrollBarVisibility="Hidden"
-        VerticalScrollMode="Disabled">
-        <StackPanel
-            x:Name="StackPanel"
-            VerticalAlignment="Top"
-            Background="Transparent"
-            Orientation="Horizontal"
-            Spacing="10" />
+    <GridView
+        x:Name="GridView"
+        Width="{x:Bind Width}"
+        Height="52"
+        AllowDrop="True"
+        CanDragItems="True"
+        CanReorderItems="True"
+        FlowDirection="LeftToRight"
+        IsItemClickEnabled="False"
+        ItemsSource="{x:Bind Items}"
+        ScrollViewer.HorizontalScrollBarVisibility="Auto"
+        ScrollViewer.HorizontalScrollMode="Auto"
+        ScrollViewer.VerticalScrollBarVisibility="Disabled"
+        ScrollViewer.VerticalScrollMode="Disabled"
+        SelectionMode="None">
 
-    </ScrollViewer>
+        <GridView.ItemsPanel>
+            <ItemsPanelTemplate>
+                <StackPanel
+                    x:Name="StackPanel"
+                    VerticalAlignment="Top"
+                    Background="Transparent"
+                    Orientation="Horizontal"
+                    Spacing="10" />
+            </ItemsPanelTemplate>
+        </GridView.ItemsPanel>
+
+    </GridView>
+
 </UserControl>

@@ -1,18 +1,8 @@
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+using System.Collections.ObjectModel;
 using Timebook.Helper;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -21,31 +11,35 @@ namespace Timebook.Controls
 {
     public sealed partial class ClassBar : UserControl
     {
+        ObservableCollection<ClassButton> Items = new ObservableCollection<ClassButton>();
+
         public ClassBar()
         {
             this.InitializeComponent();
 
-            foreach(Guid key in DataHelper.GetClassOrder())
+            foreach (Guid key in DataHelper.GetClassOrder())
             {
                 ClassButton classButton = new ClassButton(key);
-                StackPanel.Children.Add(classButton);
+                Items.Add(classButton);
+                classButton.Deleted += (sender, args) => { Items.Remove(sender); };
             }
-            CreateNewClass();
+            CreateNewClassButton();
         }
 
-        void CreateNewClass()
+        void CreateNewClassButton()
         {
             ClassButton newClassButton = new ClassButton();
-            StackPanel.Children.Add(newClassButton);
+            Items.Add(newClassButton);
+            newClassButton.Deleted += (sender, args) => { Items.Remove(sender); };
 
-            newClassButton.ContentChanged += OnContentChanged;
+            newClassButton.ContentChanged += OnNewClassButtonContentChanged;
         }
 
-        void OnContentChanged(object sender, EventArgs e)
+        void OnNewClassButtonContentChanged(object sender, EventArgs e)
         {
-            ((ClassButton)sender).ContentChanged -= OnContentChanged;
+            ((ClassButton)sender).ContentChanged -= OnNewClassButtonContentChanged;
 
-            CreateNewClass();
+            CreateNewClassButton();
         }
     }
 }
