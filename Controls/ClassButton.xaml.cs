@@ -1,8 +1,13 @@
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Automation.Peers;
+using Microsoft.UI.Xaml.Automation.Provider;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using System;
+using System.Runtime.InteropServices;
+using System.Xml.Linq;
 using Timebook.Helper;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -10,6 +15,30 @@ using Timebook.Helper;
 
 namespace Timebook.Controls
 {
+
+    public partial class CustomButton : Button
+    {
+        protected override void OnPointerPressed(PointerRoutedEventArgs e)
+        {
+            // Your custom logic here
+            base.OnPointerPressed(e);
+
+            /*
+            var peer = new ButtonAutomationPeer(this);
+            var invokeProvider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
+            invokeProvider?.Invoke();*/
+
+            //ReleasePointerCapture(e.Pointer);
+
+            e.Handled = false;
+        }
+
+        protected override void OnPointerCaptureLost(PointerRoutedEventArgs e)
+        {
+            //base.OnPointerCaptureLost(e);
+        }
+    }
+
     public class ClassData
     {
         public long Color { get; set; } = -0x1;
@@ -82,7 +111,7 @@ namespace Timebook.Controls
             this.ActualThemeChanged += LoadContent;
         }
 
-        public void LoadContent(FrameworkElement sender=null, object e=null)
+        public void LoadContent(FrameworkElement sender = null, object e = null)
         {
             if (IsEmpty)
             {
