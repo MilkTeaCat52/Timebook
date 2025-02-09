@@ -78,7 +78,9 @@
             Margin="16,0,0,0"
             EditMode="False" />
 
-        <lc:ClassBar Grid.Row="1" Margin="128,0,40,0" />
+        <lc:ClassBar_New Grid.Row="1" Margin="128,0,40,0" />
+
+        <lc:DropTestTarget Grid.Row="0" Margin="64,100,0,0"/>
 
     </Grid>
 </Window>

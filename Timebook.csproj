@@ -20,7 +20,9 @@
   <ItemGroup>
     <None Remove="Controls\Cell.xaml" />
     <None Remove="Controls\CellEditPage.xaml" />
+    <None Remove="Controls\ClassButton_New.xaml" />
     <None Remove="Controls\ColorButton.xaml" />
+    <None Remove="Controls\DropTestTarget.xaml" />
     <None Remove="Controls\Pill.xaml" />
     <None Remove="Controls\PillBar.xaml" />
     <None Remove="Controls\PillEditPage.xaml" />
@@ -81,6 +83,21 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Pages\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\ClassButton_New.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\DropTestTarget.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\ClassBar_New.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Controls\PillBar.xaml">

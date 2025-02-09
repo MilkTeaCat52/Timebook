@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="Timebook.Controls.ClassBar_New"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:Timebook.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+
+        <Style x:Key="ItemContainerStyle" TargetType="GridViewItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="GridViewItem">
+                        <Border
+                            x:Name="ContainerBorder"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="16">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContainerBorder" Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="LightBlue" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Selected">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContainerBorder" Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Blue" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="NewGridViewItemStyle" TargetType="GridViewItem">
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+            <Setter Property="Background" Value="{ThemeResource GridViewItemBackground}" />
+            <Setter Property="Foreground" Value="{ThemeResource GridViewItemForeground}" />
+            <Setter Property="TabNavigation" Value="Local" />
+            <Setter Property="IsHoldingEnabled" Value="True" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Margin" Value="10,0,4,4" />
+            <Setter Property="MinWidth" Value="76" />
+            <Setter Property="MinHeight" Value="{ThemeResource GridViewItemMinHeight}" />
+            <Setter Property="AllowDrop" Value="True" />
+            <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
+            <Setter Property="FocusVisualMargin" Value="-3" />
+            <Setter Property="FocusVisualPrimaryBrush" Value="{ThemeResource GridViewItemFocusVisualPrimaryBrush}" />
+            <Setter Property="FocusVisualPrimaryThickness" Value="2" />
+            <Setter Property="FocusVisualSecondaryBrush" Value="{ThemeResource GridViewItemFocusVisualSecondaryBrush}" />
+            <Setter Property="FocusVisualSecondaryThickness" Value="1" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="GridViewItem">
+                        <ListViewItemPresenter
+                            x:Name="Root"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            CheckBoxBorderBrush="{ThemeResource GridViewItemCheckBoxBorderBrush}"
+                            CheckBoxBrush="{ThemeResource GridViewItemCheckBoxBrush}"
+                            CheckBoxCornerRadius="{ThemeResource GridViewItemCheckBoxCornerRadius}"
+                            CheckBoxDisabledBorderBrush="{ThemeResource GridViewItemCheckBoxDisabledBorderBrush}"
+                            CheckBoxDisabledBrush="{ThemeResource GridViewItemCheckBoxDisabledBrush}"
+                            CheckBoxPointerOverBorderBrush="{ThemeResource GridViewItemCheckBoxPointerOverBorderBrush}"
+                            CheckBoxPointerOverBrush="{ThemeResource GridViewItemCheckBoxPointerOverBrush}"
+                            CheckBoxPressedBorderBrush="{ThemeResource GridViewItemCheckBoxPressedBorderBrush}"
+                            CheckBoxPressedBrush="{ThemeResource GridViewItemCheckBoxPressedBrush}"
+                            CheckBoxSelectedBrush="{ThemeResource GridViewItemCheckBoxSelectedBrush}"
+                            CheckBoxSelectedDisabledBrush="{ThemeResource GridViewItemCheckBoxSelectedDisabledBrush}"
+                            CheckBoxSelectedPointerOverBrush="{ThemeResource GridViewItemCheckBoxSelectedPointerOverBrush}"
+                            CheckBoxSelectedPressedBrush="{ThemeResource GridViewItemCheckBoxSelectedPressedBrush}"
+                            CheckBrush="{ThemeResource GridViewItemCheckBrush}"
+                            CheckDisabledBrush="{ThemeResource GridViewItemCheckDisabledBrush}"
+                            CheckMode="{ThemeResource GridViewItemCheckMode}"
+                            CheckPressedBrush="{ThemeResource GridViewItemCheckPressedBrush}"
+                            ContentMargin="{TemplateBinding Padding}"
+                            ContentTransitions="{TemplateBinding ContentTransitions}"
+                            Control.IsTemplateFocusTarget="True"
+                            CornerRadius="20"
+                            DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
+                            DragBackground="{ThemeResource GridViewItemDragBackground}"
+                            DragForeground="{ThemeResource GridViewItemDragForeground}"
+                            DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
+                            FocusBorderBrush="{ThemeResource GridViewItemFocusBorderBrush}"
+                            FocusVisualMargin="{TemplateBinding FocusVisualMargin}"
+                            FocusVisualPrimaryBrush="{TemplateBinding FocusVisualPrimaryBrush}"
+                            FocusVisualPrimaryThickness="{TemplateBinding FocusVisualPrimaryThickness}"
+                            FocusVisualSecondaryBrush="{TemplateBinding FocusVisualSecondaryBrush}"
+                            FocusVisualSecondaryThickness="{TemplateBinding FocusVisualSecondaryThickness}"
+                            PlaceholderBackground="{ThemeResource GridViewItemPlaceholderBackground}"
+                            PointerOverBackground="{ThemeResource GridViewItemBackgroundPointerOver}"
+                            PointerOverBorderBrush="{ThemeResource GridViewItemPointerOverBorderBrush}"
+                            PointerOverForeground="{ThemeResource GridViewItemForegroundPointerOver}"
+                            PressedBackground="{ThemeResource GridViewItemBackgroundPressed}"
+                            ReorderHintOffset="{ThemeResource GridViewItemReorderHintThemeOffset}"
+                            SelectedBackground="{ThemeResource GridViewItemBackgroundSelected}"
+                            SelectedBorderBrush="{ThemeResource GridViewItemSelectedBorderBrush}"
+                            SelectedBorderThickness="{ThemeResource GridViewItemSelectedBorderThickness}"
+                            SelectedDisabledBackground="{ThemeResource GridViewItemBackgroundSelectedDisabled}"
+                            SelectedDisabledBorderBrush="{ThemeResource GridViewItemSelectedDisabledBorderBrush}"
+                            SelectedForeground="{ThemeResource GridViewItemForegroundSelected}"
+                            SelectedInnerBorderBrush="{ThemeResource GridViewItemSelectedInnerBorderBrush}"
+                            SelectedPointerOverBackground="{ThemeResource GridViewItemBackgroundSelectedPointerOver}"
+                            SelectedPointerOverBorderBrush="{ThemeResource GridViewItemSelectedPointerOverBorderBrush}"
+                            SelectedPressedBackground="{ThemeResource GridViewItemBackgroundSelectedPressed}"
+                            SelectedPressedBorderBrush="{ThemeResource GridViewItemSelectedPressedBorderBrush}"
+                            SelectionCheckMarkVisualEnabled="{ThemeResource GridViewItemSelectionCheckMarkVisualEnabled}" />
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+    </UserControl.Resources>
+
+    <GridView
+        x:Name="GridView"
+        Height="56"
+        AllowDrop="True"
+        CanDragItems="True"
+        CanReorderItems="True"
+        DragItemsStarting="OnDragItemsStarting"
+        FlowDirection="LeftToRight"
+        IsItemClickEnabled="True"
+        ItemContainerStyle="{StaticResource NewGridViewItemStyle}"
+        ItemsSource="{x:Bind Items}"
+        ScrollViewer.HorizontalScrollBarVisibility="Auto"
+        ScrollViewer.HorizontalScrollMode="Auto"
+        ScrollViewer.VerticalScrollBarVisibility="Disabled"
+        ScrollViewer.VerticalScrollMode="Disabled"
+        SelectionMode="None">
+
+        <GridView.ItemsPanel>
+            <ItemsPanelTemplate>
+                <StackPanel
+                    x:Name="StackPanel"
+                    VerticalAlignment="Top"
+                    Background="Transparent"
+                    Orientation="Horizontal" />
+            </ItemsPanelTemplate>
+        </GridView.ItemsPanel>
+
+    </GridView>
+</UserControl>
