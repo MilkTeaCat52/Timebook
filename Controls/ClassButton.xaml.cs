@@ -90,8 +90,8 @@ namespace Timebook.Controls
             }
         }
 
-        public delegate void ContentChangedHandler(object sender, EventArgs e);
-        public event ContentChangedHandler ContentChanged;
+        public delegate void ContentChangedEventHandler(object sender, EventArgs e);
+        public event ContentChangedEventHandler ContentChanged;
 
         public ClassButton()
         {

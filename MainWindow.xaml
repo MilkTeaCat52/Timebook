@@ -79,5 +79,6 @@
 
         <lc:ClassBar_New Grid.Row="1" Margin="192,0,40,0" />
 
+        <lc:ClassButton_New Grid.Row="1" Margin="192,80,40,0" />
     </Grid>
 </Window>

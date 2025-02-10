@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="Timebook.Controls.DragButton"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:Timebook.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Background="{StaticResource ButtonBackground}"
+    BorderBrush="{StaticResource ButtonBorderBrush}"
+    Foreground="{StaticResource ButtonForeground}"
+    PointerEntered="OnPointerEntered"
+    PointerExited="OnPointerExited"
+    PointerPressed="OnPointerPressed"
+    PointerReleased="OnPointerReleased"
+    mc:Ignorable="d">
+
+
+
+    <ContentPresenter
+        x:Name="ContentPresenter"
+        Height="42"
+        MinWidth="76"
+        Padding="{StaticResource ButtonPadding}"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        Background="{Binding Background}"
+        BackgroundSizing="OuterBorderEdge"
+        BorderBrush="{Binding BorderBrush}"
+        BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
+        CornerRadius="20"
+        FocusVisualMargin="-3"
+        FontFamily="{ThemeResource ContentControlThemeFontFamily}"
+        FontSize="{ThemeResource ControlContentThemeFontSize}"
+        FontWeight="Normal"
+        Foreground="{Binding Foreground}"
+        UseSystemFocusVisuals="{StaticResource UseSystemFocusVisuals}">
+        <ContentPresenter.RenderTransform>
+            <ScaleTransform x:Name="scaleTransform" CenterX="50" CenterY="25" ScaleX="1" ScaleY="1" />
+        </ContentPresenter.RenderTransform>
+
+        <ContentPresenter.BackgroundTransition>
+            <BrushTransition Duration="0:0:0.083" />
+        </ContentPresenter.BackgroundTransition>
+
+        <TextBlock
+            x:Name="TextBlock"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontSize="16"
+            Text="Test"
+            TextAlignment="Center" />
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackground}" />
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrush}" />
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForeground}" />
+                        </ObjectAnimationUsingKeyFrames>
+
+                        <DoubleAnimation
+                            Storyboard.TargetName="scaleTransform"
+                            Storyboard.TargetProperty="ScaleX"
+                            To="1.0"
+                            Duration="0:0:0.25" />
+                        <DoubleAnimation
+                            Storyboard.TargetName="scaleTransform"
+                            Storyboard.TargetProperty="ScaleY"
+                            To="1.0"
+                            Duration="0:0:0.25" />
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="PointerOver">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPointerOver}" />
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPointerOver}" />
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPointerOver}" />
+                        </ObjectAnimationUsingKeyFrames>
+
+                        <DoubleAnimation
+                            Storyboard.TargetName="scaleTransform"
+                            Storyboard.TargetProperty="ScaleX"
+                            To="1.0"
+                            Duration="0:0:0.25" />
+                        <DoubleAnimation
+                            Storyboard.TargetName="scaleTransform"
+                            Storyboard.TargetProperty="ScaleY"
+                            To="1.0"
+                            Duration="0:0:0.25" />
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="Pressed">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPressed}" />
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPressed}" />
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPressed}" />
+                        </ObjectAnimationUsingKeyFrames>
+
+                        <DoubleAnimation
+                            Storyboard.TargetName="scaleTransform"
+                            Storyboard.TargetProperty="ScaleX"
+                            To="0.98"
+                            Duration="0:0:0.03" />
+                        <DoubleAnimation
+                            Storyboard.TargetName="scaleTransform"
+                            Storyboard.TargetProperty="ScaleY"
+                            To="0.98"
+                            Duration="0:0:0.03" />
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="Disabled">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundDisabled}" />
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushDisabled}" />
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundDisabled}" />
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </ContentPresenter>
+
+</UserControl>

@@ -1,3 +1,4 @@
+using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -46,5 +47,15 @@ namespace Timebook.Controls
             }
         }
 
+        private void OnItemClicked(object sender, ItemClickEventArgs e)
+        {
+            ((ClassButton_New)e.ClickedItem).OnPointerReleased();
+            ((ClassButton_New)e.ClickedItem).Clicked();
+        }
+
+        private void OnDragCompleted(object sender, DragItemsCompletedEventArgs e)
+        {
+            ((ClassButton_New)e.Items[0]).OnPointerExited();
+        }
     }
 }
