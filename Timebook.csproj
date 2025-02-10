@@ -18,11 +18,9 @@
     <Content Remove="Assets\Square44x44Logo.altform-lightunplated_targetsize-256.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="Controls\Cell.xaml" />
     <None Remove="Controls\CellEditPage.xaml" />
     <None Remove="Controls\ClassButton_New.xaml" />
     <None Remove="Controls\ColorButton.xaml" />
-    <None Remove="Controls\DropTestTarget.xaml" />
     <None Remove="Controls\Pill.xaml" />
     <None Remove="Controls\PillBar.xaml" />
     <None Remove="Controls\PillEditPage.xaml" />
@@ -90,11 +88,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Controls\DropTestTarget.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
     <Page Update="Controls\ClassBar_New.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -120,7 +113,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Controls\Cell.xaml">
+    <Page Update="Controls\CellButton.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

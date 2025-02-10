@@ -20,6 +20,8 @@ namespace Timebook.Controls
 {
     public sealed partial class ClassButton_New : UserControl
     {
+        public Guid id;
+
         public string Text
         {
             get { return TextBlock.Text; }
@@ -31,10 +33,10 @@ namespace Timebook.Controls
             this.InitializeComponent();
         }
 
-        public ClassButton_New(string Text)
+        public ClassButton_New(Guid id)
         {
             this.InitializeComponent();
-            this.Text = Text;
+            this.id = id;
         }
     }
 }

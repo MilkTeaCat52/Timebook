@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Timebook.Helper;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -27,20 +28,21 @@ namespace Timebook.Controls
 
         public ClassBar_New()
         {
-            for (int i = 0; i < 15; i++)
-            {
-                var r = new Random();
-                Items.Add(new(r.NextInt64().ToString()));
-            }
-
             this.InitializeComponent();
+
+            foreach (Guid key in DataHelper.GetClassOrder())
+            {
+                ClassButton_New classButton = new ClassButton_New(key);
+                Items.Add(classButton);
+                //classButton.Deleted += (sender, args) => { Items.Remove(sender); };
+            }
         }
 
         private void OnDragItemsStarting(object sender, DragItemsStartingEventArgs e)
         {
             if (e.Items.Count > 0)
             {
-                e.Data.SetText(((ClassButton_New)e.Items[0]).Text);  // Pass the dragged item as text
+                e.Data.SetText(((ClassButton_New)e.Items[0]).id.ToString());  // Pass the dragged item as text
             }
         }
 
