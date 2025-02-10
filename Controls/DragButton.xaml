@@ -38,7 +38,6 @@
         <ContentPresenter.RenderTransform>
             <ScaleTransform x:Name="scaleTransform" CenterX="50" CenterY="25" ScaleX="1" ScaleY="1" />
         </ContentPresenter.RenderTransform>
-
         <ContentPresenter.BackgroundTransition>
             <BrushTransition Duration="0:0:0.083" />
         </ContentPresenter.BackgroundTransition>

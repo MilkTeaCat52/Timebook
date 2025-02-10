@@ -43,6 +43,7 @@ namespace Timebook.Controls
         {
             if (e.Items.Count > 0)
             {
+                ((ClassButton_New)e.Items[0]).BlockClick();
                 e.Data.SetText(((ClassButton_New)e.Items[0]).id.ToString());  // Pass the dragged item as text
             }
         }
@@ -50,7 +51,6 @@ namespace Timebook.Controls
         private void OnItemClicked(object sender, ItemClickEventArgs e)
         {
             ((ClassButton_New)e.ClickedItem).OnPointerReleased();
-            ((ClassButton_New)e.ClickedItem).Clicked();
         }
 
         private void OnDragCompleted(object sender, DragItemsCompletedEventArgs e)

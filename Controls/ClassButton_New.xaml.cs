@@ -39,7 +39,12 @@ namespace Timebook.Controls
             DragButton.OnPointerExited();
         }
 
-        public void Clicked()
+        public void BlockClick()
+        {
+            DragButton.BlockClick();
+        }
+
+        private void DragButton_Clicked(object sender, EventArgs e)
         {
             DragButton.Text = "Chungus";
         }
