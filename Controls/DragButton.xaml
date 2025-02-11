@@ -7,9 +7,6 @@
     xmlns:local="using:Timebook.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Name="UserControl"
-    Background="{ThemeResource ButtonBackground}"
-    BorderBrush="{ThemeResource ButtonBorderBrush}"
-    Foreground="{ThemeResource ButtonForeground}"
     PointerEntered="OnPointerEntered"
     PointerExited="OnPointerExited"
     PointerPressed="OnPointerPressed"
@@ -22,20 +19,18 @@
         Height="{Binding Height, ElementName=UserControl}"
         MinWidth="{Binding MinWidth, ElementName=UserControl}"
         MinHeight="{Binding MinHeight, ElementName=UserControl}"
-        Padding="{StaticResource ButtonPadding}"
+        CornerRadius="{Binding CornerRadius, ElementName=UserControl}"
         HorizontalAlignment="Center"
         VerticalAlignment="Center"
-        Background="{Binding Background}"
+        Padding="{StaticResource ButtonPadding}" 
         BackgroundSizing="OuterBorderEdge"
-        BorderBrush="{Binding BorderBrush}"
         BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
-        CornerRadius="{Binding CornerRadius, ElementName=UserControl}"
         FocusVisualMargin="-3"
         FontFamily="{ThemeResource ContentControlThemeFontFamily}"
         FontSize="{ThemeResource ControlContentThemeFontSize}"
         FontWeight="Normal"
-        Foreground="{Binding Foreground}"
         UseSystemFocusVisuals="{StaticResource UseSystemFocusVisuals}">
+        
         <ContentPresenter.RenderTransform>
             <ScaleTransform x:Name="scaleTransform" CenterX="50" CenterY="25" ScaleX="1" ScaleY="1" />
         </ContentPresenter.RenderTransform>
@@ -51,15 +46,15 @@
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="CommonStates">
                 <VisualState x:Name="Normal">
-                    <Storyboard>
+                    <Storyboard x:Name="NormalStateStoryboard">
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding Background, ElementName=UserControl}" />
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackground}" />
                         </ObjectAnimationUsingKeyFrames>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding BorderBrush, ElementName=UserControl}" />
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrush}" />
                         </ObjectAnimationUsingKeyFrames>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding Foreground, ElementName=UserControl}" />
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForeground}" />
                         </ObjectAnimationUsingKeyFrames>
 
                         <DoubleAnimation
@@ -75,15 +70,15 @@
                     </Storyboard>
                 </VisualState>
                 <VisualState x:Name="PointerOver">
-                    <Storyboard>
+                    <Storyboard x:Name="PointerOverStateStoryboard">
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Bind ButtonBackgroundPointerOver}" />
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPointerOver}" />
                         </ObjectAnimationUsingKeyFrames>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Bind ButtonBorderBrushPointerOver}" />
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPointerOver}" />
                         </ObjectAnimationUsingKeyFrames>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Bind ButtonForegroundPointerOver}" />
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPointerOver}" />
                         </ObjectAnimationUsingKeyFrames>
 
                         <DoubleAnimation
@@ -99,15 +94,15 @@
                     </Storyboard>
                 </VisualState>
                 <VisualState x:Name="Pressed">
-                    <Storyboard>
+                    <Storyboard x:Name="PressedStateStoryboard">
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Bind ButtonBackgroundPressed}" />
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPressed}" />
                         </ObjectAnimationUsingKeyFrames>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Bind ButtonBorderBrushPressed}" />
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPressed}" />
                         </ObjectAnimationUsingKeyFrames>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Bind ButtonForegroundPressed}" />
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPressed}" />
                         </ObjectAnimationUsingKeyFrames>
 
                         <DoubleAnimation

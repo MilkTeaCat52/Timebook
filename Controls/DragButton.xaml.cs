@@ -4,7 +4,9 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Markup;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Animation;
 using System;
+using Windows.UI;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -22,22 +24,50 @@ namespace Timebook.Controls
         public static readonly DependencyProperty AdditionalContentProperty =
             DependencyProperty.Register("AdditionalContent", typeof(object), typeof(DragButton), new PropertyMetadata(null));
 
-        public Brush ButtonBackgroundPointerOver { get; set; } = (SolidColorBrush)Application.Current.Resources["ButtonBackgroundPointerOver"];
-        public Brush ButtonBorderBrushPointerOver { get; set; } = (LinearGradientBrush)Application.Current.Resources["ButtonBorderBrushPointerOver"];
-        public Brush ButtonForegroundPointerOver { get; set; } = (SolidColorBrush)Application.Current.Resources["ButtonForegroundPointerOver"];
-        public Brush ButtonBackgroundPressed { get; set; } = (SolidColorBrush)Application.Current.Resources["ButtonBackgroundPressed"];
-        public Brush ButtonBorderBrushPressed { get; set; } = (SolidColorBrush)Application.Current.Resources["ButtonBorderBrushPressed"];
-        public Brush ButtonForegroundPressed { get; set; } = (SolidColorBrush)Application.Current.Resources["ButtonForegroundPressed"];
-
-
         public delegate void ClickedEventHandler(object sender, EventArgs e);
         public event ClickedEventHandler Clicked;
 
         bool pointerDown = false;
 
+        public SolidColorBrush _background;
+        new public SolidColorBrush Background
+        {
+            get
+            {
+                return _background;
+            }
+            set
+            {
+                var color = value.Color;
+
+                UpdateStoryboardResource("NormalStateStoryboard", value);
+                UpdateStoryboardResource("PointerOverStateStoryboard", Helper.ColorHelper.GetButtonHoverBrush(color));
+                UpdateStoryboardResource("PressedStateStoryboard", Helper.ColorHelper.GetButtonPressedBrush(color));
+
+                //Refresh Visuals
+                VisualStateManager.GoToState(this, "PointerOver", true);
+                VisualStateManager.GoToState(this, "Normal", true);
+
+                _background = value;
+            }
+        }
+
+        void UpdateStoryboardResource(string storyboardName, Brush brush)
+        {
+            var storyboard = (Storyboard)ContentPresenter.FindName(storyboardName);
+            var backgroundAnimation = (ObjectAnimationUsingKeyFrames)storyboard.Children[0]; // Get the first animation in the storyboard
+            var keyFrame = (DiscreteObjectKeyFrame)backgroundAnimation.KeyFrames[0]; // Access the first keyframe
+
+            // Update the animation's value with the new resource
+            keyFrame.Value = brush;
+        }
+
         public DragButton()
         {
             this.InitializeComponent();
+
+            Background = new SolidColorBrush(Color.FromArgb(0x0f, 0xff, 0xff, 0xff));
+
             VisualStateManager.GoToState(this, "Normal", true);
         }
 

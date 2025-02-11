@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using System;
 using Timebook.Helper;
+using Windows.UI;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -35,27 +36,23 @@ namespace Timebook.Controls
 
         public bool IsEmpty = true;
 
-        new public Brush Background
+        new public SolidColorBrush Background
         {
             get
             {
-                return this.DragButton.Background;
+                return DragButton.Background;
             }
 
             set
             {
-                var color = ((SolidColorBrush)value).Color;
-
-                this.DragButton.Background = value;
-                this.DragButton.ButtonBackgroundPointerOver = Helper.ColorHelper.GetButtonHoverBrush(color);
-                this.DragButton.ButtonBackgroundPressed = Helper.ColorHelper.GetButtonPressedBrush(color);
+                DragButton.Background = value;
             }
         }
         public string Text
         {
             set
             {
-                this.TextBlock.Text = value;
+                TextBlock.Text = value;
             }
         }
 
@@ -93,7 +90,7 @@ namespace Timebook.Controls
                 {
                     this.Icon.Foreground = new SolidColorBrush(Colors.Black);
                 }
-                this.Background = this.Background; //sets background for "+" button
+                this.Background = this.Background; //sets hover color for "+" button depending on theme
             }
             else
             {
