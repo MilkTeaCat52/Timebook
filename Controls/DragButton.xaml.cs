@@ -1,7 +1,9 @@
+using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Markup;
+using Microsoft.UI.Xaml.Media;
 using System;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -19,6 +21,14 @@ namespace Timebook.Controls
         }
         public static readonly DependencyProperty AdditionalContentProperty =
             DependencyProperty.Register("AdditionalContent", typeof(object), typeof(DragButton), new PropertyMetadata(null));
+
+        public Brush ButtonBackgroundPointerOver { get; set; } = (SolidColorBrush)Application.Current.Resources["ButtonBackgroundPointerOver"];
+        public Brush ButtonBorderBrushPointerOver { get; set; } = (LinearGradientBrush)Application.Current.Resources["ButtonBorderBrushPointerOver"];
+        public Brush ButtonForegroundPointerOver { get; set; } = (SolidColorBrush)Application.Current.Resources["ButtonForegroundPointerOver"];
+        public Brush ButtonBackgroundPressed { get; set; } = (SolidColorBrush)Application.Current.Resources["ButtonBackgroundPressed"];
+        public Brush ButtonBorderBrushPressed { get; set; } = (SolidColorBrush)Application.Current.Resources["ButtonBorderBrushPressed"];
+        public Brush ButtonForegroundPressed { get; set; } = (SolidColorBrush)Application.Current.Resources["ButtonForegroundPressed"];
+
 
         public delegate void ClickedEventHandler(object sender, EventArgs e);
         public event ClickedEventHandler Clicked;
@@ -46,8 +56,12 @@ namespace Timebook.Controls
 
         public void OnPointerPressed(object sender, PointerRoutedEventArgs e)
         {
-            VisualStateManager.GoToState(this, "Pressed", true);
-            pointerDown = true;
+            PointerPoint point = e.GetCurrentPoint(this);
+            if (point.Properties.IsLeftButtonPressed)
+            {
+                VisualStateManager.GoToState(this, "Pressed", true);
+                pointerDown = true;
+            }
         }
 
         public void OnPointerReleased(object sender = null, PointerRoutedEventArgs e = null)

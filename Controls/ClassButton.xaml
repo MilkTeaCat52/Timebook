@@ -6,16 +6,19 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:Timebook.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Background="Transparent"
     mc:Ignorable="d">
 
-    <local:CustomButton
-        x:Name="Button"
-        MinWidth="64"
-        Click="EditStart"
-        CornerRadius="16"
-        >
 
-        <Button.ContextFlyout>
+
+    <local:DragButton
+        x:Name="DragButton"
+        Height="42"
+        MinWidth="76"
+        Clicked="EditStart"
+        CornerRadius="20">
+
+        <local:DragButton.ContextFlyout>
             <MenuFlyout x:Name="MenuFlyout" Opened="ContextMenuOpened">
                 <MenuFlyoutItem
                     Click="DeleteButtonClicked"
@@ -26,7 +29,7 @@
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
             </MenuFlyout>
-        </Button.ContextFlyout>
+        </local:DragButton.ContextFlyout>
 
 
         <Grid>
@@ -34,10 +37,13 @@
             <TextBlock
                 x:Name="TextBlock"
                 HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
                 Text="" />
         </Grid>
 
-    </local:CustomButton>
 
+
+    </local:DragButton>
 
 </UserControl>

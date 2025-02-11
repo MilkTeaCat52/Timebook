@@ -19,7 +19,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Controls\CellEditPage.xaml" />
-    <None Remove="Controls\ClassButton_New.xaml" />
     <None Remove="Controls\ColorButton.xaml" />
     <None Remove="Controls\DragButton.xaml" />
     <None Remove="Controls\Pill.xaml" />
@@ -90,12 +89,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Controls\ClassButton_New.xaml">
+    <Page Update="Controls\ClassButton.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Controls\ClassBar_New.xaml">
+    <Page Update="Controls\ClassBar.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

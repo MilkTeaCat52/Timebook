@@ -1,13 +1,8 @@
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Automation.Peers;
-using Microsoft.UI.Xaml.Automation.Provider;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using System;
-using System.Runtime.InteropServices;
-using System.Xml.Linq;
 using Timebook.Helper;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -15,30 +10,6 @@ using Timebook.Helper;
 
 namespace Timebook.Controls
 {
-
-    public partial class CustomButton : Button
-    {
-        protected override void OnPointerPressed(PointerRoutedEventArgs e)
-        {
-            // Your custom logic here
-            base.OnPointerPressed(e);
-
-            /*
-            var peer = new ButtonAutomationPeer(this);
-            var invokeProvider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
-            invokeProvider?.Invoke();*/
-
-            //ReleasePointerCapture(e.Pointer);
-
-            e.Handled = false;
-        }
-
-        protected override void OnPointerCaptureLost(PointerRoutedEventArgs e)
-        {
-            //base.OnPointerCaptureLost(e);
-        }
-    }
-
     public class ClassData
     {
         public long Color { get; set; } = -0x1;
@@ -56,12 +27,11 @@ namespace Timebook.Controls
             this.Room = data.Room;
         }
     }
-
     public sealed partial class ClassButton : UserControl
     {
         ContentDialog dialog;
 
-        Guid id;
+        public Guid id;
 
         public bool IsEmpty = true;
 
@@ -69,17 +39,16 @@ namespace Timebook.Controls
         {
             get
             {
-                return this.Button.Background;
+                return this.DragButton.Background;
             }
 
             set
             {
-                this.Button.Background = value;
-
                 var color = ((SolidColorBrush)value).Color;
 
-                Button.Resources["ButtonBackgroundPointerOver"] = Helper.ColorHelper.GetButtonHoverBrush(color);
-                Button.Resources["ButtonBackgroundPressed"] = Helper.ColorHelper.GetButtonPressedBrush(color);
+                this.DragButton.Background = value;
+                this.DragButton.ButtonBackgroundPointerOver = Helper.ColorHelper.GetButtonHoverBrush(color);
+                this.DragButton.ButtonBackgroundPressed = Helper.ColorHelper.GetButtonPressedBrush(color);
             }
         }
         public string Text
@@ -100,6 +69,7 @@ namespace Timebook.Controls
             LoadContent();
             this.ActualThemeChanged += LoadContent;
         }
+
         public ClassButton(Guid id)
         {
             this.InitializeComponent();
@@ -136,7 +106,7 @@ namespace Timebook.Controls
             }
         }
 
-        async public void EditStart(object sender, RoutedEventArgs e)
+        async public void EditStart(object sender, EventArgs e)
         {
             dialog = new ContentDialog();
 
@@ -163,6 +133,7 @@ namespace Timebook.Controls
 
             var result = await dialog.ShowAsync();
         }
+
         private void EditSave(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             if (IsEmpty)
@@ -202,6 +173,21 @@ namespace Timebook.Controls
             {
                 MenuFlyout.Hide();
             }
+        }
+
+        public void OnPointerReleased()
+        {
+            DragButton.OnPointerReleased();
+        }
+
+        public void OnPointerExited()
+        {
+            DragButton.OnPointerExited();
+        }
+
+        public void BlockClick()
+        {
+            DragButton.BlockClick();
         }
     }
 }
