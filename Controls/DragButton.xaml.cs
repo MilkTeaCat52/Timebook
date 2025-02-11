@@ -1,6 +1,7 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Markup;
 using System;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -8,18 +9,21 @@ using System;
 
 namespace Timebook.Controls
 {
+    [ContentProperty(Name = "AdditionalContent")]
     public sealed partial class DragButton : UserControl
     {
+        public object AdditionalContent
+        {
+            get { return (object)GetValue(AdditionalContentProperty); }
+            set { SetValue(AdditionalContentProperty, value); }
+        }
+        public static readonly DependencyProperty AdditionalContentProperty =
+            DependencyProperty.Register("AdditionalContent", typeof(object), typeof(DragButton), new PropertyMetadata(null));
+
         public delegate void ClickedEventHandler(object sender, EventArgs e);
         public event ClickedEventHandler Clicked;
 
         bool pointerDown = false;
-
-        public string Text
-        {
-            get { return TextBlock.Text; }
-            set { TextBlock.Text = value; }
-        }
 
         public DragButton()
         {

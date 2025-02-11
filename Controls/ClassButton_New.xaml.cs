@@ -14,8 +14,8 @@ namespace Timebook.Controls
 
         public string Text
         {
-            get { return DragButton.Text; }
-            set { DragButton.Text = value; }
+            get { return TextBlock.Text; }
+            set { TextBlock.Text = value; }
         }
 
         public ClassButton_New()
@@ -46,7 +46,7 @@ namespace Timebook.Controls
 
         private void DragButton_Clicked(object sender, EventArgs e)
         {
-            DragButton.Text = "Chungus";
+            this.Text = "Chungus";
         }
     }
 }

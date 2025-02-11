@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:Timebook.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="UserControl"
     Background="{StaticResource ButtonBackground}"
     BorderBrush="{StaticResource ButtonBorderBrush}"
     Foreground="{StaticResource ButtonForeground}"
@@ -42,13 +43,10 @@
             <BrushTransition Duration="0:0:0.083" />
         </ContentPresenter.BackgroundTransition>
 
-        <TextBlock
-            x:Name="TextBlock"
+        <ContentPresenter
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            FontSize="16"
-            Text="Test"
-            TextAlignment="Center" />
+            Content="{Binding AdditionalContent, ElementName=UserControl}" />
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="CommonStates">
@@ -115,12 +113,12 @@
                         <DoubleAnimation
                             Storyboard.TargetName="scaleTransform"
                             Storyboard.TargetProperty="ScaleX"
-                            To="0.98"
+                            To="0.985"
                             Duration="0:0:0.03" />
                         <DoubleAnimation
                             Storyboard.TargetName="scaleTransform"
                             Storyboard.TargetProperty="ScaleY"
-                            To="0.98"
+                            To="0.985"
                             Duration="0:0:0.03" />
                     </Storyboard>
                 </VisualState>
