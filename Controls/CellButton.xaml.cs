@@ -6,6 +6,8 @@ using System;
 using Timebook.Helper;
 using Windows.ApplicationModel.DataTransfer;
 
+using ClassID = System.Guid;
+
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
@@ -15,7 +17,7 @@ namespace Timebook.Controls
     {
         public bool isEmpty = true;
 
-        Guid classDataID; //migrate after structures implemented
+        ClassID classDataID; //migrate after structures implemented
 
         new public Brush Background
         {
@@ -115,16 +117,14 @@ namespace Timebook.Controls
             if (e.DataView.Contains(StandardDataFormats.Text))
             {
                 string droppedItem = await e.DataView.GetTextAsync();
-                Guid id = Guid.Parse(droppedItem);
+                ClassID id = ClassID.Parse(droppedItem);
 
-                if (id != Guid.Empty)
+                if (id != ClassID.Empty)
                 {
                     this.isEmpty = false;
                     this.classDataID = id;
                     LoadContent();
                 }
-
-
             }
         }
 

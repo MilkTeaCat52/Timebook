@@ -17,6 +17,8 @@ using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
+using ClassID = System.Guid;
+
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
@@ -31,7 +33,7 @@ namespace Timebook.Controls
         {
             this.InitializeComponent();
 
-            foreach (Guid key in DataHelper.GetClassOrder())
+            foreach (ClassID key in DataHelper.GetClassOrder())
             {
                 ClassButton classButton = new ClassButton(key);
                 Items.Add(classButton);
@@ -73,6 +75,22 @@ namespace Timebook.Controls
         private void OnDragCompleted(object sender, DragItemsCompletedEventArgs e)
         {
             ((ClassButton)e.Items[0]).OnPointerExited();
+            SaveClassOrder();
+        }
+
+        private void SaveClassOrder()
+        {
+            List<ClassID> classOrder = new List<ClassID>();
+            foreach (ClassButton classButton in Items)
+            {
+                if (!classButton.IsEmpty)
+                {
+                    classOrder.Add(classButton.id);
+                }
+            }
+
+            DataHelper.SetClassOrder(classOrder);
+            DataHelper.Save(); //move to manual save when implemented
         }
     }
 }

@@ -6,6 +6,8 @@ using System;
 using Timebook.Helper;
 using Windows.UI;
 
+using ClassID = System.Guid;
+
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
@@ -32,7 +34,7 @@ namespace Timebook.Controls
     {
         ContentDialog dialog;
 
-        public Guid id;
+        public ClassID id;
 
         public bool IsEmpty = true;
 
@@ -67,7 +69,7 @@ namespace Timebook.Controls
             this.ActualThemeChanged += LoadContent;
         }
 
-        public ClassButton(Guid id)
+        public ClassButton(ClassID id)
         {
             this.InitializeComponent();
 

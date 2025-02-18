@@ -5,6 +5,8 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Timebook.Controls;
 
+using ClassID = System.Guid;
+
 namespace Timebook.Helper
 {
     public class Database
@@ -12,23 +14,23 @@ namespace Timebook.Helper
         public Version VersionNumber { get; set; }
         public DateTime TimeStamp { get; set; }
 
-        public Dictionary<Guid, ClassData> Classes { get; set; }
-        public List<Guid> ClassOrder { get; set; }
+        public Dictionary<ClassID, ClassData> Classes { get; set; }
+        public List<ClassID> ClassOrder { get; set; }
 
 
         public Database()
         {
             VersionNumber = App.Version;
             TimeStamp = DateTime.Now;
-            Classes = new Dictionary<Guid, ClassData>();
-            ClassOrder = new List<Guid>();
+            Classes = new Dictionary<ClassID, ClassData>();
+            ClassOrder = new List<ClassID>();
         }
 
         [JsonConstructor]
         public Database(Version versionNumber,
                         DateTime timeStamp,
-                        Dictionary<Guid, ClassData> classes,
-                        List<Guid> classOrder)
+                        Dictionary<ClassID, ClassData> classes,
+                        List<ClassID> classOrder)
         {
             VersionNumber = versionNumber;
             TimeStamp = timeStamp;
@@ -49,7 +51,7 @@ namespace Timebook.Helper
 
         public static Database Database = new Database();
 
-        public static Guid CreateClassData()
+        public static ClassID CreateClassData()
         {
             ClassData classData = new ClassData();
             var id = GetNewID();
@@ -60,30 +62,35 @@ namespace Timebook.Helper
             return id;
         }
 
-        public static ClassData GetClassData(Guid key)
+        public static ClassData GetClassData(ClassID key)
         {
             return Database.Classes[key];
         }
 
-        public static void SetClassData(Guid key, ClassData classData)
+        public static void SetClassData(ClassID key, ClassData classData)
         {
             Database.Classes[key] = classData;
         }
 
-        public static void RemoveClassData(Guid key)
+        public static void RemoveClassData(ClassID key)
         {
             Database.Classes.Remove(key);
             Database.ClassOrder.Remove(key);
         }
 
-        public static List<Guid> GetClassOrder()
+        public static List<ClassID> GetClassOrder()
         {
             return Database.ClassOrder;
         }
 
-        static public Guid GetNewID()
+        public static void SetClassOrder(List<ClassID> newOrder)
         {
-            return Guid.NewGuid();
+            Database.ClassOrder = new List<ClassID>(newOrder);
+        }
+
+        static public ClassID GetNewID()
+        {
+            return ClassID.NewGuid();
         }
 
         public static void Save()
