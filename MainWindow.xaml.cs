@@ -1,5 +1,7 @@
+using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 using System;
 
 using System.Runtime.InteropServices;
@@ -27,6 +29,8 @@ namespace Timebook
             WindowHelper.InitializeWindow(this, width, height, AppTitleBar);
 
             this.Closed += OnMainWindowClosed;
+
+            LoadCellGrid();
         }
 
         private void OpenSettings(object sender, RoutedEventArgs e)
@@ -54,6 +58,22 @@ namespace Timebook
             {
                 settings.Close();
             }
+        }
+
+        private void LoadCellGrid()
+        {
+            CellGrid cellGrid;
+            if (DataHelper.GetTableData() == null)
+            {
+                cellGrid = new();
+            }
+            else
+            {
+                cellGrid = new CellGrid(DataHelper.GetTableData());
+            }
+
+            Grid.SetRow(cellGrid, 2);
+            RootGrid.Children.Add(cellGrid);
         }
     }
 }

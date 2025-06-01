@@ -48,6 +48,8 @@ namespace Timebook.Controls
             Items.Add(newClassButton);
             newClassButton.Deleted += (sender, args) => { Items.Remove(sender); };
 
+            //newClassButton.CanDrag = false;
+
             newClassButton.ContentChanged += OnNewClassButtonContentChanged;
         }
 

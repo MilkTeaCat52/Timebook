@@ -30,7 +30,7 @@ namespace Timebook.Helper
             Classes = new Dictionary<ClassID, ClassData>();
             ClassOrder = new List<ClassID>();
             Cells = new Dictionary<CellID, CellData>();
-            Table = new TableData();
+            Table = null;
         }
 
         [JsonConstructor]
@@ -141,6 +141,25 @@ namespace Timebook.Helper
         static public CellID GetNewCellID()
         {
             return CellID.NewGuid();
+        }
+
+        public static TableData CreateTable()
+        {
+            TableData tableData = new TableData();
+            Database.Table = tableData;
+
+            return tableData;
+        }
+
+        public static TableData GetTableData()
+        {
+            if (Database.Table != null)
+            {
+                return Database.Table;
+            }else
+            {
+                return null;
+            }
         }
 
         public static void Save()

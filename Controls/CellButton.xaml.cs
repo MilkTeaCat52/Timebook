@@ -2,6 +2,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using System;
+using System.ComponentModel;
 using Timebook.Helper;
 using Windows.ApplicationModel.DataTransfer;
 using CellID = System.Guid;
@@ -84,16 +85,6 @@ namespace Timebook.Controls
 
         public delegate void ContentChangedEventHandler(object sender, EventArgs e);
         public event ContentChangedEventHandler ContentChanged;
-
-        public CellButton() //FOR TESTING ONLY DELETE LATER
-        {
-            this.InitializeComponent();
-
-            this.id = DataHelper.CreateCellData();
-
-            LoadContent();
-            this.ActualThemeChanged += LoadContent;
-        }
 
         public CellButton(CellID id)
         {
@@ -179,7 +170,14 @@ namespace Timebook.Controls
 
         private void OnDragOver(object sender, DragEventArgs e)
         {
-            e.AcceptedOperation = DataPackageOperation.Copy;
+            if (sender.GetType()==typeof(DragButton))
+            {
+                e.AcceptedOperation = DataPackageOperation.Move;
+            }
+            else
+            {
+                e.AcceptedOperation = DataPackageOperation.Copy;
+            }
         }
 
         private async void OnDrop(object sender, DragEventArgs e)
@@ -197,8 +195,9 @@ namespace Timebook.Controls
                 dataTemp.OverrideName = false;
                 dataTemp.OverrideRoom = false;
 
-                LoadContent();
+                DataHelper.Save(); //move to manual save when implemented
 
+                LoadContent();
             }
         }
 
@@ -210,7 +209,7 @@ namespace Timebook.Controls
             Deleted?.Invoke(this, null);
 
             DataHelper.ResetCellData(id);
-            //DataHelper.Save(); //move to manual save when implemented
+            DataHelper.Save(); //move to manual save when implemented
 
             LoadContent();
         }

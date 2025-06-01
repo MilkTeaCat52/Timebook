@@ -14,8 +14,9 @@
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
-    <Grid>
+    <Grid x:Name="RootGrid">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
@@ -50,13 +51,7 @@
             </Grid>
         </Border>
 
-        <GridView
-            x:Name="Table"
-            Grid.Row="1"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Stretch"
-            IsItemClickEnabled="False"
-            SelectionMode="None" />
+
 
         <Button
             x:Name="Edit"
@@ -73,8 +68,7 @@
             <SymbolIcon Symbol="Edit" />
         </Button>
 
-        <lc:CellButton Grid.Row="1" Margin="180,180,0,0" />
-
         <lc:ClassBar Grid.Row="1" Margin="192,0,40,0" />
+
     </Grid>
 </Window>
