@@ -12,7 +12,7 @@ namespace Timebook.Helper
         static Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
         static Dictionary<string,object> defaults= new Dictionary<string, object>()
         {
-            {"ThemeSetting", ElementTheme.Default},
+            {"ThemeSetting", (int)ElementTheme.Default},
             {"StoragePathSetting", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)+"\\Timebook" }
         };
 
