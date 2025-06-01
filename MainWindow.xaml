@@ -73,7 +73,7 @@
             <SymbolIcon Symbol="Edit" />
         </Button>
 
-        <lc:CellButton Grid.Row="1" Margin="16,0,0,0" />
+        <lc:CellButton Grid.Row="1" Margin="180,180,0,0" />
 
         <lc:ClassBar Grid.Row="1" Margin="192,0,40,0" />
     </Grid>

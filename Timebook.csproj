@@ -19,6 +19,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Controls\CellEditPage.xaml" />
+    <None Remove="Controls\CellGrid.xaml" />
     <None Remove="Controls\ColorButton.xaml" />
     <None Remove="Controls\DragButton.xaml" />
     <None Remove="Controls\Pill.xaml" />
@@ -82,6 +83,11 @@
   <ItemGroup>
     <Folder Include="Pages\" />
     <Folder Include="Themes\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\CellGrid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Controls\DragButton.xaml">

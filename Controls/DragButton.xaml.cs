@@ -38,6 +38,9 @@ namespace Timebook.Controls
             }
             set
             {
+                if (value == null){
+                    value = new SolidColorBrush(Color.FromArgb(0x0f, 0xff, 0xff, 0xff));
+                }
                 var color = value.Color;
 
                 UpdateStoryboardResource("NormalStateStoryboard", value);
@@ -66,7 +69,7 @@ namespace Timebook.Controls
         {
             this.InitializeComponent();
 
-            Background = new SolidColorBrush(Color.FromArgb(0x0f, 0xff, 0xff, 0xff));
+            Background = null;
 
             VisualStateManager.GoToState(this, "Normal", true);
         }

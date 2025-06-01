@@ -19,18 +19,17 @@
         Height="{Binding Height, ElementName=UserControl}"
         MinWidth="{Binding MinWidth, ElementName=UserControl}"
         MinHeight="{Binding MinHeight, ElementName=UserControl}"
-        CornerRadius="{Binding CornerRadius, ElementName=UserControl}"
-        HorizontalAlignment="Center"
-        VerticalAlignment="Center"
-        Padding="{StaticResource ButtonPadding}" 
+        Padding="{Binding Padding, ElementName=UserControl}"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch"
         BackgroundSizing="OuterBorderEdge"
         BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
+        CornerRadius="{Binding CornerRadius, ElementName=UserControl}"
         FocusVisualMargin="-3"
         FontFamily="{ThemeResource ContentControlThemeFontFamily}"
         FontSize="{ThemeResource ControlContentThemeFontSize}"
         FontWeight="Normal"
         UseSystemFocusVisuals="{StaticResource UseSystemFocusVisuals}">
-        
         <ContentPresenter.RenderTransform>
             <ScaleTransform x:Name="scaleTransform" CenterX="50" CenterY="25" ScaleX="1" ScaleY="1" />
         </ContentPresenter.RenderTransform>
@@ -39,8 +38,8 @@
         </ContentPresenter.BackgroundTransition>
 
         <ContentPresenter
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
             Content="{Binding AdditionalContent, ElementName=UserControl}" />
 
         <VisualStateManager.VisualStateGroups>

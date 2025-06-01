@@ -6,25 +6,59 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:Timebook.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Background="Transparent"
     mc:Ignorable="d">
 
-    <Button
-        x:Name="Button"
+    <local:DragButton
+        x:Name="DragButton"
+        Width="84"
+        Height="100"
         AllowDrop="True"
-        Click="CellEdit"
+        Clicked="EditStart"
+        CornerRadius="5"
         DragOver="OnDragOver"
-        
-        Drop="OnDrop"
-        PointerEntered="MouseEntered"
-        PointerExited="MouseExited">
+        Drop="OnDrop">
 
-        <Grid>
-            <SymbolIcon x:Name="Icon" Symbol="Add" />
+        <local:DragButton.ContextFlyout>
+            <MenuFlyout x:Name="MenuFlyout" Opened="ContextMenuOpened">
+                <MenuFlyoutItem
+                    Click="DeleteButtonClicked"
+                    Icon="Delete"
+                    Text="Delete">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="Delete" />
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+            </MenuFlyout>
+        </local:DragButton.ContextFlyout>
+
+
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <TextBlock
-                x:Name="TextBlock"
+                x:Name="NameTextBlock"
                 HorizontalAlignment="Center"
-                Text="" />
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="" 
+                TextWrapping="WrapWholeWords"
+                TextAlignment="Center"/>
+            <TextBlock
+                x:Name="TeacherTextBlock"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                FontSize="12"
+                Text="" 
+                Margin="1,0,0,1"/>
+            <TextBlock
+                x:Name="RoomTextBlock"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                FontSize="12"
+                Text="" 
+                Margin="0,0,1,1"/>
         </Grid>
 
-    </Button>
+
+
+    </local:DragButton>
 </UserControl>

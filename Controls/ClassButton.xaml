@@ -16,7 +16,8 @@
         Height="42"
         MinWidth="76"
         Clicked="EditStart"
-        CornerRadius="20">
+        CornerRadius="20"
+        Padding="{StaticResource ButtonPadding}">
 
         <local:DragButton.ContextFlyout>
             <MenuFlyout x:Name="MenuFlyout" Opened="ContextMenuOpened">

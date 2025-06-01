@@ -93,6 +93,8 @@ namespace Timebook.Controls
                     this.Icon.Foreground = new SolidColorBrush(Colors.Black);
                 }
                 this.Background = this.Background; //sets hover color for "+" button depending on theme
+
+                //this.DragButton.CanDrag = false; //change later
             }
             else
             {
@@ -102,6 +104,8 @@ namespace Timebook.Controls
 
                 this.Background = Timebook.Helper.ColorHelper.HexToBrush(dataTemp.Color);
                 this.Text = dataTemp.Name;
+
+                //this.DragButton.CanDrag = true; //change later
             }
         }
 

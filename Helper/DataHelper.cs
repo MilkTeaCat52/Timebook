@@ -6,6 +6,8 @@ using System.Text.Json.Serialization;
 using Timebook.Controls;
 
 using ClassID = System.Guid;
+using CellID = System.Guid;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Timebook.Helper
 {
@@ -17,6 +19,9 @@ namespace Timebook.Helper
         public Dictionary<ClassID, ClassData> Classes { get; set; }
         public List<ClassID> ClassOrder { get; set; }
 
+        public Dictionary<CellID, CellData> Cells { get; set; }
+        public TableData Table { get; set; }
+
 
         public Database()
         {
@@ -24,18 +29,25 @@ namespace Timebook.Helper
             TimeStamp = DateTime.Now;
             Classes = new Dictionary<ClassID, ClassData>();
             ClassOrder = new List<ClassID>();
+            Cells = new Dictionary<CellID, CellData>();
+            Table = new TableData();
         }
 
         [JsonConstructor]
         public Database(Version versionNumber,
                         DateTime timeStamp,
                         Dictionary<ClassID, ClassData> classes,
-                        List<ClassID> classOrder)
+                        List<ClassID> classOrder,
+                        Dictionary<CellID, CellData> cells,
+                        TableData table)
         {
             VersionNumber = versionNumber;
             TimeStamp = timeStamp;
             Classes = classes;
             ClassOrder = classOrder;
+            Cells = cells;
+            Table = table;
+
         }
     }
 
@@ -54,7 +66,7 @@ namespace Timebook.Helper
         public static ClassID CreateClassData()
         {
             ClassData classData = new ClassData();
-            var id = GetNewID();
+            var id = GetNewClassID();
 
             Database.Classes.Add(id, classData);
             Database.ClassOrder.Add(id);
@@ -88,9 +100,47 @@ namespace Timebook.Helper
             Database.ClassOrder = new List<ClassID>(newOrder);
         }
 
-        static public ClassID GetNewID()
+        static public ClassID GetNewClassID()
         {
             return ClassID.NewGuid();
+        }
+
+        public static CellID CreateCellData()
+        {
+            CellData cellData = new CellData();
+            var id = GetNewCellID();
+
+            Database.Cells.Add(id, cellData);
+
+            //set in table
+
+            return id;
+        }
+
+        public static CellData GetCellData(CellID key)
+        {
+            return Database.Cells[key];
+        }
+
+        public static void SetCellData(CellID key, CellData cellData)
+        {
+            Database.Cells[key] = cellData;
+        }
+
+        /*public static void RemoveCellData(CellID key)
+        {
+            Database.Cells.Remove(key);
+            //remove from table
+        }*/
+
+        public static void ResetCellData(CellID key)
+        {
+            Database.Cells[key] = new CellData();
+        }
+
+        static public CellID GetNewCellID()
+        {
+            return CellID.NewGuid();
         }
 
         public static void Save()
