@@ -81,6 +81,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Generated Files\CsWinRT\" />
     <Folder Include="Pages\" />
     <Folder Include="Themes\" />
   </ItemGroup>

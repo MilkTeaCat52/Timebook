@@ -8,6 +8,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Background="Transparent"
     CanDrag="True"
+    DragStarting="OnDragStarting"
+    DropCompleted="OnDropCompleted"
+    PointerReleased="OnPointerReleased"
+    PointerExited="OnPointerExited"
     mc:Ignorable="d">
 
     <local:DragButton
@@ -21,7 +25,7 @@
         Drop="OnDrop">
 
         <local:DragButton.ContextFlyout>
-            <MenuFlyout x:Name="MenuFlyout" Opened="ContextMenuOpened">
+            <MenuFlyout x:Name="MenuFlyout">
                 <MenuFlyoutItem
                     Click="DeleteButtonClicked"
                     Icon="Delete"

@@ -67,6 +67,8 @@ namespace Timebook.Controls
 
             LoadContent();
             this.ActualThemeChanged += LoadContent;
+            RefreshHelper.UIRefreshed += LoadContent;
+
         }
 
         public ClassButton(ClassID id)
@@ -80,7 +82,7 @@ namespace Timebook.Controls
             this.ActualThemeChanged += LoadContent;
         }
 
-        public void LoadContent(FrameworkElement sender = null, object e = null)
+        public void LoadContent(object sender = null, object e = null)
         {
             if (IsEmpty)
             {
@@ -154,6 +156,8 @@ namespace Timebook.Controls
             ContentChanged?.Invoke(this, null);
 
             DataHelper.Save(); //move to manual save when implemented
+
+            RefreshHelper.RefreshUI();
         }
 
         public delegate void DeletedHandler(ClassButton sender, EventArgs e);

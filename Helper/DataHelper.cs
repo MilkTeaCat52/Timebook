@@ -66,7 +66,7 @@ namespace Timebook.Helper
         public static ClassID CreateClassData()
         {
             ClassData classData = new ClassData();
-            var id = GetNewClassID();
+            var id = ClassID.NewGuid();
 
             Database.Classes.Add(id, classData);
             Database.ClassOrder.Add(id);
@@ -100,19 +100,12 @@ namespace Timebook.Helper
             Database.ClassOrder = new List<ClassID>(newOrder);
         }
 
-        static public ClassID GetNewClassID()
-        {
-            return ClassID.NewGuid();
-        }
-
         public static CellID CreateCellData()
         {
             CellData cellData = new CellData();
-            var id = GetNewCellID();
+            var id = CellID.NewGuid();
 
             Database.Cells.Add(id, cellData);
-
-            //set in table
 
             return id;
         }
@@ -127,20 +120,16 @@ namespace Timebook.Helper
             Database.Cells[key] = cellData;
         }
 
-        /*public static void RemoveCellData(CellID key)
-        {
-            Database.Cells.Remove(key);
-            //remove from table
-        }*/
-
         public static void ResetCellData(CellID key)
         {
             Database.Cells[key] = new CellData();
         }
 
-        static public CellID GetNewCellID()
+        public static void SwapCellData(CellID key1, CellID key2)
         {
-            return CellID.NewGuid();
+            CellData temp = Database.Cells[key1];
+            Database.Cells[key1] = Database.Cells[key2];
+            Database.Cells[key2] = temp;
         }
 
         public static TableData CreateTable()

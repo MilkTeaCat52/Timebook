@@ -1,10 +1,15 @@
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Imaging;
 using System;
-using System.ComponentModel;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Timebook.Helper;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.Foundation;
+using Windows.Graphics.Imaging;
+using Windows.Storage.Streams;
 using CellID = System.Guid;
 using ClassID = System.Guid;
 
@@ -47,7 +52,7 @@ namespace Timebook.Controls
     {
         ContentDialog dialog;
 
-        CellID id;
+        public CellID id;
 
         new public SolidColorBrush Background
         {
@@ -94,9 +99,10 @@ namespace Timebook.Controls
 
             LoadContent();
             this.ActualThemeChanged += LoadContent;
+            RefreshHelper.UIRefreshed += LoadContent;
         }
 
-        public void LoadContent(FrameworkElement sender = null, object e = null)
+        public void LoadContent(object sender = null, object e = null)
         {
             var dataTemp = DataHelper.GetCellData(id);
 
@@ -170,21 +176,23 @@ namespace Timebook.Controls
 
         private void OnDragOver(object sender, DragEventArgs e)
         {
-            if (sender.GetType()==typeof(DragButton))
-            {
-                e.AcceptedOperation = DataPackageOperation.Move;
-            }
-            else
+            if (e.DataView.Contains("ClassID"))
             {
                 e.AcceptedOperation = DataPackageOperation.Copy;
+            }
+            else if (e.DataView.Contains("CellID"))
+            {
+                e.AcceptedOperation = DataPackageOperation.Move;
+                e.DragUIOverride.Caption = "\u21c4 Swap";
+                e.DragUIOverride.IsGlyphVisible = false;
             }
         }
 
         private async void OnDrop(object sender, DragEventArgs e)
         {
-            if (e.DataView.Contains(StandardDataFormats.Text))
+            if (e.DataView.Contains("ClassID"))
             {
-                string droppedItem = await e.DataView.GetTextAsync();
+                string droppedItem = (await e.DataView.GetDataAsync("ClassID")).ToString();
                 ClassID classDataID = ClassID.Parse(droppedItem);
 
                 var dataTemp = DataHelper.GetCellData(id);
@@ -194,11 +202,17 @@ namespace Timebook.Controls
                 dataTemp.OverrideColor = false;
                 dataTemp.OverrideName = false;
                 dataTemp.OverrideRoom = false;
-
-                DataHelper.Save(); //move to manual save when implemented
-
-                LoadContent();
             }
+            else if (e.DataView.Contains("CellID"))
+            {
+                string droppedItem = (await e.DataView.GetDataAsync("CellID")).ToString();
+                CellID otherID = CellID.Parse(droppedItem);
+
+                DataHelper.SwapCellData(id, otherID);                
+            }
+            DataHelper.Save(); //move to manual save when implemented
+            LoadContent();
+            RefreshHelper.RefreshUI();
         }
 
 
@@ -214,8 +228,56 @@ namespace Timebook.Controls
             LoadContent();
         }
 
-        private void ContextMenuOpened(object sender, object e)
+        private async void OnDragStarting(UIElement sender, DragStartingEventArgs e)
         {
+            DragButton.BlockClick();
+
+            e.Data.SetData("CellID", id.ToString());
+            e.Data.RequestedOperation = DataPackageOperation.Move;
+
+
+            //
+            var rtb = new RenderTargetBitmap();
+
+            await rtb.RenderAsync(sender);
+
+            IBuffer buffer = await rtb.GetPixelsAsync();
+
+            int width = rtb.PixelWidth;
+            int height = rtb.PixelHeight;
+
+            // Create SoftwareBitmap directly from the pixel buffer
+            SoftwareBitmap softwareBitmap = new SoftwareBitmap(
+                BitmapPixelFormat.Bgra8,
+                width,
+                height,
+                BitmapAlphaMode.Premultiplied);
+
+            using (var dataReader = DataReader.FromBuffer(buffer))
+            {
+                byte[] pixelBytes = new byte[buffer.Length];
+                dataReader.ReadBytes(pixelBytes);
+                softwareBitmap.CopyFromBuffer(pixelBytes.AsBuffer());
+            }//
+
+            e.DragUI.SetContentFromSoftwareBitmap(softwareBitmap, new Point(0, 0));
+            sender.Visibility = Visibility.Collapsed;
+
+        }
+
+        private void OnPointerReleased(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            DragButton.OnPointerReleased();
+        }
+
+        public void OnPointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            DragButton.OnPointerExited();
+        }
+
+        private void OnDropCompleted(UIElement sender, DropCompletedEventArgs args)
+        {
+            sender.Visibility = Visibility.Visible;
         }
     }
 

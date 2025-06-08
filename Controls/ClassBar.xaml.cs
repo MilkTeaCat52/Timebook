@@ -48,8 +48,6 @@ namespace Timebook.Controls
             Items.Add(newClassButton);
             newClassButton.Deleted += (sender, args) => { Items.Remove(sender); };
 
-            //newClassButton.CanDrag = false;
-
             newClassButton.ContentChanged += OnNewClassButtonContentChanged;
         }
 
@@ -64,8 +62,15 @@ namespace Timebook.Controls
         {
             if (e.Items.Count > 0)
             {
-                ((ClassButton)e.Items[0]).BlockClick();
-                e.Data.SetText(((ClassButton)e.Items[0]).id.ToString());  // Pass the dragged item as text
+                if (((ClassButton)e.Items[0]).IsEmpty) //Prevent empty ClassButton from being dragged
+                {
+                    e.Cancel = true;
+                }
+                else
+                {
+                    ((ClassButton)e.Items[0]).BlockClick();
+                    e.Data.SetData("ClassID", ((ClassButton)e.Items[0]).id.ToString());  // Pass the dragged item as text
+                }
             }
         }
 
@@ -74,8 +79,20 @@ namespace Timebook.Controls
             ((ClassButton)e.ClickedItem).OnPointerReleased();
         }
 
-        private void OnDragCompleted(object sender, DragItemsCompletedEventArgs e)
+        private async void OnDragCompleted(object sender, DragItemsCompletedEventArgs e)
         {
+            for(int i = 0; i < Items.Count; i++)
+            {
+                if (((ClassButton)Items[i]).IsEmpty && i!=Items.Count-1)
+                {
+                    var temp = Items[i];
+                    Items.RemoveAt(i);
+                    Items.Add(temp);
+
+                    //Items.Move(i, Items.Count-1);
+                }
+            }
+            
             ((ClassButton)e.Items[0]).OnPointerExited();
             SaveClassOrder();
         }
